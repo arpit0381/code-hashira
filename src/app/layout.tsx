@@ -40,7 +40,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://arpit-bajpai.dev',
+    url: 'https://arpitbajpai.in',
     siteName: 'Arpit Bajpai Portfolio',
     title: 'Arpit Bajpai — Full Stack Developer & AI Engineer',
     description:
@@ -85,8 +85,8 @@ const jsonLd = {
   description:
     'BCA 3rd Year Student, Full Stack Developer, AI & ML Engineer, and Founder. Building the future with code.',
   sameAs: [
-    'https://github.com/arpit-bajpai',
-    'https://linkedin.com/in/arpit-bajpai',
+    'https://github.com/arpit0381',
+    'https://www.linkedin.com/in/arpit-bajpai-6780aa220/',
     'https://twitter.com/arpit_bajpai',
   ],
   knowsAbout: [

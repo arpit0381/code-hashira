@@ -106,7 +106,7 @@ export default function Footer() {
     {
       name: 'Instagram',
       icon: InstagramIcon,
-      url: 'https://instagram.com/arpit_bajpai', // Instagram requested by user
+      url: 'https://www.instagram.com/arpitexplores/', // Instagram requested by user
       hoverClass: 'hover:border-flame hover:text-flame hover:shadow-[0_0_15px_rgba(249,115,22,0.4)]'
     },
     {

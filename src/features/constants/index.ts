@@ -235,7 +235,7 @@ export const STATIC_PROJECTS: Project[] = [
       'A mobile application for tracking and organizing receipts. Focuses on streamlined performance and intuitive mobile UI.',
     category: 'webapp',
     techStack: ['Flutter', 'Dart', 'Firebase'],
-    githubUrl: 'https://github.com/arpit-bajpai',
+    githubUrl: 'https://github.com/arpit0381',
     liveUrl: 'https://lifereceipt.arpitbajpai.in',
     featured: true,
     imageUrl: '/lifereceipt.png',
@@ -247,7 +247,7 @@ export const STATIC_PROJECTS: Project[] = [
       'Professional website for a solar energy company highlighting services, ongoing projects, and government subsidy schemes.',
     category: 'fullstack',
     techStack: ['React.js', 'Next.js', 'Tailwind CSS'],
-    githubUrl: 'https://github.com/arpit-bajpai',
+    githubUrl: 'https://github.com/arpit0381',
     liveUrl: 'https://sulaxsolar.com',
     featured: true,
     imageUrl: '/sulax.png',
@@ -259,7 +259,7 @@ export const STATIC_PROJECTS: Project[] = [
       'Corporate website for Om Power Solutions, built for scale and providing detailed information about their enterprise solutions.',
     category: 'fullstack',
     techStack: ['React.js', 'Node.js', 'PostgreSQL'],
-    githubUrl: 'https://github.com/arpit-bajpai',
+    githubUrl: 'https://github.com/arpit0381',
     liveUrl: 'https://ompowersolution.com', // Assuming standard domain, fallback to # if user corrections are needed
     featured: false,
     imageUrl: '/ompower.png',
@@ -271,7 +271,7 @@ export const STATIC_PROJECTS: Project[] = [
       'The official technical and cultural fest website for PSIT, developed to handle high traffic and event registrations.',
     category: 'fullstack',
     techStack: ['Next.js', 'PostgreSQL', 'GO'],
-    githubUrl: 'https://github.com/arpit-bajpai',
+    githubUrl: 'https://github.com/arpit0381',
     liveUrl: 'https://ignitia.in', // Guessing common domain format, will ask user to confirm if incorrect
     featured: false,
     imageUrl: '/ignitia.png',
@@ -283,7 +283,7 @@ export const STATIC_PROJECTS: Project[] = [
       'A platform designed to connect students with college clubs and manage memberships effectively.',
     category: 'fullstack',
     techStack: ['React.js', 'Node.js', 'PostgreSQL'],
-    githubUrl: 'https://github.com/arpit-bajpai',
+    githubUrl: 'https://github.com/arpit0381',
     liveUrl: 'https://clubsphere.in',
     featured: false,
     imageUrl: '/clubsphere.png',
@@ -410,7 +410,7 @@ export const KONAMI_SEQUENCE = [
 // ── Social Links ──────────────────────────────────────────────
 export const SOCIAL_LINKS = {
   github: 'https://github.com/arpit0381',
-  linkedin: 'https://linkedin.com/in/arpitbajpai',
+  linkedin: 'https://www.linkedin.com/in/arpit-bajpai-6780aa220/',
   twitter: 'https://twitter.com/arpitbajpai',
   email: 'arpitbajpai038@gmail.com',
 } as const;
