@@ -1,9 +1,8 @@
 'use client';
 
 import { useRef, useState, useEffect } from 'react';
-import { motion, useInView } from 'framer-motion';
 import { Send, CheckCircle } from 'lucide-react';
-import { staggerContainer, fadeInUp } from '@/features/animations/variants';
+import { useScrollReveal } from '@/hooks/useScrollReveal';
 
 interface FormData {
   name: string;
@@ -13,8 +12,7 @@ interface FormData {
 }
 
 export default function ContactSection() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '0px' });
+  const containerRef = useScrollReveal();
   const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
@@ -65,10 +63,7 @@ export default function ContactSection() {
     setIsSubmitting(true);
 
     try {
-      // TODO: Submit to Supabase contacts table
-      // const { error } = await supabase.from('contacts').insert(formData);
       await new Promise((resolve) => setTimeout(resolve, 1500)); // Simulated
-
       setIsSuccess(true);
       setFormData({ name: '', email: '', subject: '', message: '' });
       localStorage.removeItem('contact-draft');
@@ -90,7 +85,7 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="contact" className="section-wrapper relative overflow-hidden py-24 md:py-32">
+    <section id="contact" ref={containerRef} className="section-wrapper relative overflow-hidden py-24 md:py-32">
       {/* Background Image with Dark Linear Gradient Overlay */}
       <div 
         className="absolute inset-0 z-0 bg-cover bg-center transition-all duration-700 pointer-events-none"
@@ -106,50 +101,26 @@ export default function ContactSection() {
       {/* Background glow */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] rounded-full glow-circle-primary pointer-events-none z-[1]" />
 
-      <div className="max-w-3xl mx-auto relative z-10" ref={ref}>
+      <div className="max-w-3xl mx-auto relative z-10">
         {/* Section Header */}
-        <motion.div
-          initial="hidden"
-          animate={isInView ? 'visible' : 'hidden'}
-          variants={staggerContainer}
-          className="text-center mb-14"
-        >
-          <motion.p
-            variants={fadeInUp}
-            className="text-accent text-sm font-mono tracking-[0.3em] uppercase mb-3"
-          >
+        <div className="text-center mb-14">
+          <p className="reveal-title text-accent text-sm font-mono tracking-[0.3em] uppercase mb-3">
             — Contact —
-          </motion.p>
-          <motion.h2
-            variants={fadeInUp}
-            className="text-4xl sm:text-5xl font-bold font-heading"
-          >
+          </p>
+          <h2 className="reveal-title text-4xl sm:text-5xl font-bold font-heading">
             Send a <span className="text-gradient-primary">Signal</span>
-          </motion.h2>
-          <motion.p
-            variants={fadeInUp}
-            className="mt-4 text-muted max-w-2xl mx-auto"
-          >
+          </h2>
+          <p className="reveal-text mt-4 text-muted max-w-2xl mx-auto">
             Ready to build something extraordinary together?
             Drop me a message and let&apos;s create the future.
-          </motion.p>
-        </motion.div>
+          </p>
+        </div>
 
         {/* Form or Success State */}
         {isSuccess ? (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="glass-card p-12 text-center"
-          >
-            {/* Slash animation */}
-            <motion.div
-              initial={{ scaleX: 0 }}
-              animate={{ scaleX: 1 }}
-              transition={{ duration: 0.6, ease: [0.77, 0, 0.175, 1] }}
-              className="w-24 h-[2px] bg-accent mx-auto mb-8"
-            />
-            <CheckCircle className="w-16 h-16 text-accent mx-auto mb-4" />
+          <div className="reveal-fade glass-card p-12 text-center">
+            <div className="w-24 h-[2px] bg-accent mx-auto mb-8 animate-pulse" />
+            <CheckCircle className="w-16 h-16 text-accent mx-auto mb-4 animate-bounce" />
             <h3 className="text-2xl font-bold font-heading text-light mb-2">
               Message Received, Hashira.
             </h3>
@@ -159,18 +130,15 @@ export default function ContactSection() {
             <button
               onClick={() => setIsSuccess(false)}
               suppressHydrationWarning
-              className="mt-6 px-6 py-2.5 text-sm text-accent border border-accent/30 rounded-lg hover:bg-accent/5 transition-colors"
+              className="mt-6 px-6 py-2.5 text-sm text-accent border border-accent/30 rounded-lg hover:bg-accent/5 hover:scale-105 active:scale-95 transition-all duration-200"
             >
               Send Another
             </button>
-          </motion.div>
+          </div>
         ) : (
-          <motion.form
+          <form
             onSubmit={handleSubmit}
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.3 }}
-            className="glass-card p-8"
+            className="reveal-fade glass-card p-8 relative z-10"
           >
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
               {/* Name */}
@@ -189,7 +157,7 @@ export default function ContactSection() {
                   onChange={handleChange}
                   placeholder="Your name"
                   suppressHydrationWarning
-                  className={`w-full px-4 py-3 text-sm bg-white/5 border rounded-lg text-light placeholder:text-muted/40 outline-none transition-colors ${
+                  className={`w-full px-4 py-3 text-sm bg-white/5 border rounded-lg text-light placeholder:text-muted/40 outline-none transition-all ${
                     errors.name
                       ? 'border-primary/60 focus:border-primary'
                       : 'border-white/10 focus:border-accent/40'
@@ -216,7 +184,7 @@ export default function ContactSection() {
                   onChange={handleChange}
                   placeholder="your@email.com"
                   suppressHydrationWarning
-                  className={`w-full px-4 py-3 text-sm bg-white/5 border rounded-lg text-light placeholder:text-muted/40 outline-none transition-colors ${
+                  className={`w-full px-4 py-3 text-sm bg-white/5 border rounded-lg text-light placeholder:text-muted/40 outline-none transition-all ${
                     errors.email
                       ? 'border-primary/60 focus:border-primary'
                       : 'border-white/10 focus:border-accent/40'
@@ -264,7 +232,7 @@ export default function ContactSection() {
                 placeholder="Tell me about your project or idea..."
                 rows={5}
                 suppressHydrationWarning
-                className={`w-full px-4 py-3 text-sm bg-white/5 border rounded-lg text-light placeholder:text-muted/40 outline-none transition-colors resize-none ${
+                className={`w-full px-4 py-3 text-sm bg-white/5 border rounded-lg text-light placeholder:text-muted/40 outline-none transition-all resize-none ${
                   errors.message
                     ? 'border-primary/60 focus:border-primary'
                     : 'border-white/10 focus:border-accent/40'
@@ -276,28 +244,22 @@ export default function ContactSection() {
             </div>
 
             {/* Submit */}
-            <motion.button
+            <button
               type="submit"
               disabled={isSubmitting}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
               suppressHydrationWarning
-              className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-3.5 bg-accent text-dark font-semibold rounded-lg hover:bg-accent-dim transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+              className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-3.5 bg-accent text-dark font-semibold rounded-lg hover:bg-accent-dim hover:scale-102 active:scale-98 transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
             >
               {isSubmitting ? (
-                <motion.div
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-                  className="w-5 h-5 border-2 border-dark/30 border-t-dark rounded-full"
-                />
+                <div className="w-5 h-5 border-2 border-dark/30 border-t-dark rounded-full animate-spin" />
               ) : (
                 <>
                   <Send size={16} />
                   Send Message
                 </>
               )}
-            </motion.button>
-          </motion.form>
+            </button>
+          </form>
         )}
       </div>
     </section>

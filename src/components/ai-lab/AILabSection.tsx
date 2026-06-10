@@ -1,10 +1,10 @@
 'use client';
 
 import { useRef, useState, useCallback } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Send, Sparkles, Bot, User } from 'lucide-react';
 import { SUGGESTED_QUESTIONS } from '@/features/constants';
-import { staggerContainer, fadeInUp } from '@/features/animations/variants';
+import { useScrollReveal } from '@/hooks/useScrollReveal';
 
 interface Message {
   id: string;
@@ -13,8 +13,7 @@ interface Message {
 }
 
 export default function AILabSection() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const containerRef = useScrollReveal();
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 'greeting',
@@ -53,7 +52,7 @@ export default function AILabSection() {
           }),
         });
 
-        if (!res.ok) throw new Error('Failed to get response');
+        if (!res.ok) throw new Error('API request failed');
 
         const reader = res.body?.getReader();
         const decoder = new TextDecoder();
@@ -81,7 +80,7 @@ export default function AILabSection() {
           }
         }
       } catch {
-        // Fallback response when API is not configured
+        // Fallback response when Groq API is not configured or fails
         const fallbackResponses: Record<string, string> = {
           'what can arpit build':
             "Arpit is a Full Stack Developer and AI/ML Engineer who can build everything from modern web applications with Next.js and React to AI-powered platforms using OpenAI and LangChain. He's delivered 15+ projects spanning e-commerce, IoT dashboards, and intelligent study platforms.",
@@ -117,10 +116,10 @@ export default function AILabSection() {
   );
 
   return (
-    <section id="ai-lab" className="section-wrapper relative overflow-hidden py-24 md:py-32">
+    <section id="ai-lab" ref={containerRef} className="section-wrapper relative overflow-hidden py-24 md:py-32">
       {/* Background Image with Dark Linear Gradient Overlay */}
       <div 
-        className="absolute inset-0 z-0 bg-cover bg-center transition-all duration-700"
+        className="absolute inset-0 z-0 bg-cover bg-center transition-all duration-700 pointer-events-none"
         style={{
           backgroundImage: 'linear-gradient(rgba(5, 5, 5, 0.75), rgba(5, 5, 5, 0.95)), url("/ai_lab_bg.png")',
           willChange: 'transform, opacity',
@@ -133,42 +132,23 @@ export default function AILabSection() {
       {/* Background glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full glow-circle-mist pointer-events-none z-[1]" />
 
-      <div className="max-w-4xl mx-auto relative z-10" ref={ref}>
+      <div className="max-w-4xl mx-auto relative z-10">
         {/* Section Header */}
-        <motion.div
-          initial="hidden"
-          animate={isInView ? 'visible' : 'hidden'}
-          variants={staggerContainer}
-          className="text-center mb-12"
-        >
-          <motion.p
-            variants={fadeInUp}
-            className="text-accent text-sm font-mono tracking-[0.3em] uppercase mb-3"
-          >
+        <div className="text-center mb-12">
+          <p className="reveal-title text-accent text-sm font-mono tracking-[0.3em] uppercase mb-3">
             — AI Lab —
-          </motion.p>
-          <motion.h2
-            variants={fadeInUp}
-            className="text-4xl sm:text-5xl font-bold font-heading"
-          >
+          </p>
+          <h2 className="reveal-title text-4xl sm:text-5xl font-bold font-heading">
             Ask <span className="text-gradient-accent">Arpit&apos;s AI</span>
-          </motion.h2>
-          <motion.p
-            variants={fadeInUp}
-            className="mt-4 text-muted max-w-2xl mx-auto"
-          >
+          </h2>
+          <p className="reveal-text mt-4 text-muted max-w-2xl mx-auto">
             An AI that knows everything about me. Ask it anything —
             skills, projects, experience, or availability.
-          </motion.p>
-        </motion.div>
+          </p>
+        </div>
 
         {/* Chat Interface */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.3 }}
-          className="relative glass-card overflow-hidden scanline"
-        >
+        <div className="reveal-fade relative glass-card overflow-hidden scanline">
           {/* Header Bar */}
           <div className="flex items-center gap-3 px-6 py-4 border-b border-white/5">
             <div className="flex gap-1.5">
@@ -176,7 +156,7 @@ export default function AILabSection() {
               <div className="w-3 h-3 rounded-full bg-thunder" />
               <div className="w-3 h-3 rounded-full bg-wind" />
             </div>
-            <span className="text-xs font-mono text-muted">
+            <span className="text-xs font-mono text-muted select-none">
               arpit_ai_terminal v1.0
             </span>
             <Sparkles className="ml-auto w-4 h-4 text-accent/60" />
@@ -258,7 +238,7 @@ export default function AILabSection() {
                 onClick={() => sendMessage(q)}
                 disabled={isLoading}
                 suppressHydrationWarning
-                className="px-3 py-1.5 text-xs font-medium text-muted bg-white/5 hover:bg-white/10 hover:text-light rounded-full border border-white/5 transition-colors disabled:opacity-50"
+                className="px-3 py-1.5 text-xs font-medium text-muted bg-white/5 hover:bg-white/10 hover:text-light rounded-full border border-white/5 transition-colors disabled:opacity-50 cursor-pointer"
               >
                 {q}
               </button>
@@ -281,12 +261,12 @@ export default function AILabSection() {
               onClick={() => sendMessage(input)}
               disabled={isLoading || !input.trim()}
               suppressHydrationWarning
-              className="p-2.5 bg-accent text-dark rounded-lg hover:bg-accent-dim transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="p-2.5 bg-accent text-dark rounded-lg hover:bg-accent-dim transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
             >
               <Send size={16} />
             </button>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

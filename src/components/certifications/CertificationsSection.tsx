@@ -1,17 +1,14 @@
 'use client';
 
-import { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
 import { ExternalLink } from 'lucide-react';
 import { CERTIFICATIONS } from '@/features/constants';
-import { staggerContainer, fadeInUp } from '@/features/animations/variants';
+import { useScrollReveal } from '@/hooks/useScrollReveal';
 
 export default function CertificationsSection() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const containerRef = useScrollReveal();
 
   return (
-    <section id="certifications" className="section-wrapper relative overflow-hidden py-24 md:py-32">
+    <section id="certifications" ref={containerRef} className="section-wrapper relative overflow-hidden py-24 md:py-32">
       {/* Background Image with Dark Linear Gradient Overlay */}
       <div 
         className="absolute inset-0 z-0 bg-cover bg-center transition-all duration-700"
@@ -27,47 +24,28 @@ export default function CertificationsSection() {
       {/* Background glow */}
       <div className="absolute top-1/3 right-0 w-[400px] h-[400px] rounded-full glow-circle-thunder pointer-events-none z-[1]" />
 
-      <div className="max-w-6xl mx-auto relative z-10" ref={ref}>
+      <div className="max-w-6xl mx-auto relative z-10">
         {/* Section Header */}
-        <motion.div
-          initial="hidden"
-          animate={isInView ? 'visible' : 'hidden'}
-          variants={staggerContainer}
-          className="text-center mb-14"
-        >
-          <motion.p
-            variants={fadeInUp}
-            className="text-accent text-sm font-mono tracking-[0.3em] uppercase mb-3"
-          >
+        <div className="text-center mb-14">
+          <p className="reveal-title text-accent text-sm font-mono tracking-[0.3em] uppercase mb-3">
             — Certifications —
-          </motion.p>
-          <motion.h2
-            variants={fadeInUp}
-            className="text-4xl sm:text-5xl font-bold font-heading"
-          >
+          </p>
+          <h2 className="reveal-title text-4xl sm:text-5xl font-bold font-heading">
             Marks of <span className="text-gradient-fire">Mastery</span>
-          </motion.h2>
-          <motion.p
-            variants={fadeInUp}
-            className="mt-4 text-muted max-w-2xl mx-auto"
-          >
+          </h2>
+          <p className="reveal-text mt-4 text-muted max-w-2xl mx-auto">
             Credentials earned through dedicated study and hands-on practice.
-          </motion.p>
-        </motion.div>
+          </p>
+        </div>
 
-        {/* Desktop: Grid / Mobile: Horizontal scroll */}
-        <motion.div
-          initial="hidden"
-          animate={isInView ? 'visible' : 'hidden'}
-          variants={staggerContainer}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
+        {/* Certifications Grid */}
+        <div className="reveal-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {CERTIFICATIONS.map((cert) => (
-            <motion.div key={cert.id} variants={fadeInUp}>
+            <div key={cert.id} className="reveal-grid-item">
               <CertFlipCard cert={cert} />
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
@@ -75,7 +53,7 @@ export default function CertificationsSection() {
 
 function CertFlipCard({ cert }: { cert: (typeof CERTIFICATIONS)[0] }) {
   return (
-    <div className="flip-card h-[240px] cursor-pointer group">
+    <div className="flip-card h-[240px] cursor-pointer group relative">
       <div className="flip-card-inner relative w-full h-full">
         {/* Front */}
         <div className="flip-card-front absolute inset-0 glass-card p-6 flex flex-col justify-between">

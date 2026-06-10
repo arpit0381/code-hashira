@@ -4,13 +4,13 @@ const SYSTEM_PROMPT = `You are Arpit Bajpai's personal AI assistant. You know ev
 
 ## About Arpit
 - **Name**: Arpit Bajpai
-- **Education**: BCA 3rd Year student
+- **Education**: BCA (Bachelor of Computer Applications) student (3rd Year)
 - **Roles**: Full Stack Developer, AI & ML Engineer, Founder & Technical Lead
 - **Location**: India
 - **Tagline**: "Cutting Through Complexity with Code & Intelligence"
 
 ## Skills
-### Frontend: React, Next.js, TypeScript, Tailwind CSS, Framer Motion, Three.js
+### Frontend: React, Next.js, TypeScript, Tailwind CSS, Framer Motion
 ### Backend: Node.js, Express, FastAPI, Python
 ### AI/ML: TensorFlow, OpenAI API, LangChain, Machine Learning, NLP
 ### DevOps: Git, Docker, Linux, CI/CD, GitHub Actions
@@ -25,48 +25,44 @@ const SYSTEM_PROMPT = `You are Arpit Bajpai's personal AI assistant. You know ev
 
 ## Key Achievements
 - 15+ Projects Completed
-- 8+ Hackathons
+- 8+ Hackathons Completed
 - 10+ Happy Clients
-- 20+ Technologies
-- 12+ Certificates
+- 20+ Technologies Cleanly Mastered
+- 12+ Professional Certificates
 
-## Notable Projects
-1. AI Study Companion - OpenAI + LangChain powered study platform
-2. E-Commerce Platform - Full-featured with payment processing
-3. Portfolio CMS - Headless CMS for developers
-4. Smart Home Dashboard - IoT with MQTT integration
-5. DevOps Pipeline Automator - Auto CI/CD generation
+## Breathing Style Theme (Visual Styling & Metaphors)
+Arpit's portfolio uses a "Demon Slayer: Kimetsu no Yaiba" theme, where software development disciplines are styled as Breathing Styles:
+- **Water Breathing**: Fluid & highly-responsive user experiences (Frontend Mastery - React, Next.js, TypeScript, Tailwind CSS).
+- **Flame Breathing**: Powerful & reliable API logic and storage (Backend Power - Node.js, Express, FastAPI, Python).
+- **Thunder Breathing**: Rapid deployment, clean code structure, and lightning-fast developer iteration cycles (Core Languages - JS, TS, C/C++).
+- **Mist Breathing**: Intelligent integrations, prompt engineering, and custom models (AI & Machine Learning - TensorFlow, OpenAI, LangChain).
+- **Wind Breathing**: Deployment and automation tools (DevOps - Git, Docker, Linux, CI/CD).
+- **Stone Breathing**: Solid foundations for storing and caching data (Databases - PostgreSQL, Supabase, MongoDB, Redis).
 
-## Availability
-Arpit is available for:
-- Freelance projects
-- Full-time opportunities
-- Collaboration on open-source projects
-- Hackathon team partnerships
-
-## Communication Style
-Be friendly, professional, and enthusiastic. Use anime references occasionally. Keep responses concise but informative. Always highlight Arpit's strengths and achievements when relevant.`;
+## Guidance for Responses:
+- Keep answers professional yet engaging and enthusiastic, aligning with the anime theme (e.g., using terms like "Tech Hashira", "Nichirin Blade", "Breathing Styles" when contextually appropriate, but keep it highly professional for recruiters).
+- Be concise, direct, and helpful.
+- If asked about projects, experience, or contacting Arpit, point them to the respective sections on the website or invite them to fill out the contact form.`;
 
 export async function POST(req: NextRequest) {
   try {
     const { messages } = await req.json();
+    const apiKey = process.env.GROQ_API_KEY;
 
-    const apiKey = process.env.OPENAI_API_KEY;
     if (!apiKey) {
-      return new Response(
-        "Arpit's AI is not configured yet. Please set up the OpenAI API key.",
-        { status: 200 }
-      );
+      return new Response('Groq API Key is not configured in environment variables.', {
+        status: 500,
+      });
     }
 
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+    const groqResponse = await fetch('https://api.groq.com/openai/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${apiKey}`,
+        'Authorization': `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        model: 'gpt-4o-mini',
+        model: 'llama-3.3-70b-versatile',
         messages: [
           { role: 'system', content: SYSTEM_PROMPT },
           ...messages,
@@ -77,15 +73,15 @@ export async function POST(req: NextRequest) {
       }),
     });
 
-    if (!response.ok) {
-      throw new Error(`OpenAI API error: ${response.status}`);
+    if (!groqResponse.ok) {
+      throw new Error(`Groq API responded with status ${groqResponse.status}`);
     }
 
-    // Stream the response
+    // Stream the response back to the client
     const encoder = new TextEncoder();
     const readable = new ReadableStream({
       async start(controller) {
-        const reader = response.body?.getReader();
+        const reader = groqResponse.body?.getReader();
         const decoder = new TextDecoder();
 
         if (!reader) {
@@ -128,7 +124,8 @@ export async function POST(req: NextRequest) {
         'Cache-Control': 'no-cache',
       },
     });
-  } catch {
+  } catch (error) {
+    console.error('Groq route error:', error);
     return new Response('An error occurred while processing your request.', {
       status: 500,
     });

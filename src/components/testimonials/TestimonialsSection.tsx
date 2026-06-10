@@ -1,14 +1,13 @@
 'use client';
 
 import { useRef, useState, useEffect, useCallback } from 'react';
-import { motion, useInView, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Quote } from 'lucide-react';
 import { TESTIMONIALS } from '@/features/constants';
-import { staggerContainer, fadeInUp } from '@/features/animations/variants';
+import { useScrollReveal } from '@/hooks/useScrollReveal';
 
 export default function TestimonialsSection() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const containerRef = useScrollReveal();
   const [current, setCurrent] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
@@ -32,7 +31,7 @@ export default function TestimonialsSection() {
   const testimonial = TESTIMONIALS[current];
 
   return (
-    <section id="testimonials" className="section-wrapper relative overflow-hidden py-24 md:py-32">
+    <section id="testimonials" ref={containerRef} className="section-wrapper relative overflow-hidden py-24 md:py-32">
       {/* Background Image with Dark Linear Gradient Overlay */}
       <div 
         className="absolute inset-0 z-0 bg-cover bg-center transition-all duration-700"
@@ -48,32 +47,22 @@ export default function TestimonialsSection() {
       {/* Background glow */}
       <div className="absolute top-1/2 left-1/4 w-[400px] h-[400px] rounded-full glow-circle-primary pointer-events-none z-[1]" />
 
-      <div className="max-w-4xl mx-auto relative z-10" ref={ref}>
+      <div className="max-w-4xl mx-auto relative z-10">
         {/* Section Header */}
-        <motion.div
-          initial="hidden"
-          animate={isInView ? 'visible' : 'hidden'}
-          variants={staggerContainer}
-          className="text-center mb-14"
-        >
-          <motion.p
-            variants={fadeInUp}
-            className="text-accent text-sm font-mono tracking-[0.3em] uppercase mb-3"
-          >
+        <div className="text-center mb-14">
+          <p className="reveal-title text-accent text-sm font-mono tracking-[0.3em] uppercase mb-3">
             — Testimonials —
-          </motion.p>
-          <motion.h2
-            variants={fadeInUp}
-            className="text-4xl sm:text-5xl font-bold font-heading"
-          >
+          </p>
+          <h2 className="reveal-title text-4xl sm:text-5xl font-bold font-heading">
             Words from <span className="text-gradient-primary">Allies</span>
-          </motion.h2>
-        </motion.div>
+          </h2>
+        </div>
 
         {/* Carousel */}
         <div
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
+          className="reveal-fade"
         >
           <AnimatePresence mode="wait">
             <motion.div
@@ -95,7 +84,7 @@ export default function TestimonialsSection() {
               {/* Author */}
               <div className="mt-8">
                 {/* Avatar placeholder */}
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-accent mx-auto mb-3 flex items-center justify-center text-dark font-bold text-lg">
+                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-accent mx-auto mb-3 flex items-center justify-center text-dark font-bold text-lg select-none">
                   {testimonial.name.charAt(0)}
                 </div>
                 <h4 className="text-base font-bold font-heading text-light">
@@ -114,7 +103,7 @@ export default function TestimonialsSection() {
             <button
               onClick={prev}
               suppressHydrationWarning
-              className="p-2 rounded-full bg-white/5 hover:bg-white/10 text-muted hover:text-light transition-colors"
+              className="p-2 rounded-full bg-white/5 hover:bg-white/10 text-muted hover:text-light transition-colors cursor-pointer"
             >
               <ChevronLeft size={20} />
             </button>
@@ -126,7 +115,7 @@ export default function TestimonialsSection() {
                   key={i}
                   onClick={() => setCurrent(i)}
                   suppressHydrationWarning
-                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                  className={`w-2 h-2 rounded-full transition-all duration-300 cursor-pointer ${
                     i === current
                       ? 'w-6 bg-accent'
                       : 'bg-white/20 hover:bg-white/40'
@@ -138,7 +127,7 @@ export default function TestimonialsSection() {
             <button
               onClick={next}
               suppressHydrationWarning
-              className="p-2 rounded-full bg-white/5 hover:bg-white/10 text-muted hover:text-light transition-colors"
+              className="p-2 rounded-full bg-white/5 hover:bg-white/10 text-muted hover:text-light transition-colors cursor-pointer"
             >
               <ChevronRight size={20} />
             </button>

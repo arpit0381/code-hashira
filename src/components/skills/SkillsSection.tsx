@@ -1,17 +1,16 @@
 'use client';
 
 import { useRef, useState } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { useInView as useRIV } from 'react-intersection-observer';
 import { BREATHING_SKILLS } from '@/features/constants';
-import { staggerContainer, fadeInUp } from '@/features/animations/variants';
 import type { BreathingSkillGroup } from '@/features/types';
+import { useScrollReveal } from '@/hooks/useScrollReveal';
 
 export default function SkillsSection() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const containerRef = useScrollReveal();
 
   return (
-    <section id="skills" className="section-wrapper relative overflow-hidden py-24 md:py-32">
+    <section id="skills" ref={containerRef} className="section-wrapper relative overflow-hidden py-24 md:py-32">
       {/* Background Image with Dark Linear Gradient Overlay */}
       <div 
         className="absolute inset-0 z-0 bg-cover bg-center transition-all duration-700"
@@ -27,48 +26,29 @@ export default function SkillsSection() {
       {/* Background glow */}
       <div className="absolute top-1/3 right-0 w-[500px] h-[500px] rounded-full glow-circle-primary pointer-events-none z-[1]" />
 
-      <div className="max-w-6xl mx-auto relative z-10" ref={ref}>
+      <div className="max-w-6xl mx-auto relative z-10">
         {/* Section Header */}
-        <motion.div
-          initial="hidden"
-          animate={isInView ? 'visible' : 'hidden'}
-          variants={staggerContainer}
-          className="text-center mb-16"
-        >
-          <motion.p
-            variants={fadeInUp}
-            className="text-accent text-sm font-mono tracking-[0.3em] uppercase mb-3"
-          >
+        <div className="text-center mb-16">
+          <p className="reveal-title text-accent text-sm font-mono tracking-[0.3em] uppercase mb-3">
             — Skills —
-          </motion.p>
-          <motion.h2
-            variants={fadeInUp}
-            className="text-4xl sm:text-5xl font-bold font-heading"
-          >
+          </p>
+          <h2 className="reveal-title text-4xl sm:text-5xl font-bold font-heading">
             Demon Slayer <span className="text-gradient-fire">Skill Tree</span>
-          </motion.h2>
-          <motion.p
-            variants={fadeInUp}
-            className="mt-4 text-muted max-w-2xl mx-auto"
-          >
+          </h2>
+          <p className="reveal-text mt-4 text-muted max-w-2xl mx-auto">
             Every breathing technique represents a domain of mastery.
             Each form has been trained through real-world projects and challenges.
-          </motion.p>
-        </motion.div>
+          </p>
+        </div>
 
         {/* Skill Cards Grid */}
-        <motion.div
-          initial="hidden"
-          animate={isInView ? 'visible' : 'hidden'}
-          variants={staggerContainer}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
+        <div className="reveal-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {BREATHING_SKILLS.map((group) => (
-            <motion.div key={group.style} variants={fadeInUp}>
+            <div key={group.style} className="reveal-grid-item">
               <BreathingCard group={group} />
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
@@ -76,17 +56,14 @@ export default function SkillsSection() {
 
 function BreathingCard({ group }: { group: BreathingSkillGroup }) {
   const [isHovered, setIsHovered] = useState(false);
-  const cardRef = useRef(null);
-  const isInView = useInView(cardRef, { once: true, margin: '-50px' });
+  const { ref, inView } = useRIV({ triggerOnce: true, threshold: 0.2 });
 
   return (
-    <motion.div
-      ref={cardRef}
-      onHoverStart={() => setIsHovered(true)}
-      onHoverEnd={() => setIsHovered(false)}
-      whileHover={{ y: -8, scale: 1.02 }}
-      transition={{ duration: 0.3, ease: 'easeOut' }}
-      className="relative glass-card p-6 overflow-hidden cursor-pointer group"
+    <div
+      ref={ref}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      className="relative glass-card p-6 overflow-hidden cursor-pointer group hover:-translate-y-2 transition-all duration-300"
       style={{
         borderColor: isHovered ? `${group.color}30` : undefined,
         boxShadow: isHovered
@@ -103,15 +80,13 @@ function BreathingCard({ group }: { group: BreathingSkillGroup }) {
       />
 
       {/* Slash overlay on hover */}
-      {isHovered && (
-        <motion.div
-          initial={{ scaleX: 0 }}
-          animate={{ scaleX: 1 }}
-          transition={{ duration: 0.4, ease: 'easeOut' }}
-          className="absolute top-0 left-0 w-full h-[2px]"
-          style={{ background: group.color, transformOrigin: 'left' }}
-        />
-      )}
+      <div
+        className="absolute top-0 left-0 w-full h-[2px] transition-transform duration-500 scale-x-0 group-hover:scale-x-100"
+        style={{
+          background: group.color,
+          transformOrigin: 'left',
+        }}
+      />
 
       <div className="relative z-10">
         {/* Technique Name */}
@@ -146,18 +121,13 @@ function BreathingCard({ group }: { group: BreathingSkillGroup }) {
               </div>
               {/* Power meter */}
               <div className="skill-meter">
-                <motion.div
-                  initial={{ width: 0 }}
-                  animate={isInView ? { width: `${skill.level}%` } : { width: 0 }}
-                  transition={{
-                    duration: 1.5,
-                    delay: 0.3,
-                    ease: [0.22, 1, 0.36, 1],
-                  }}
+                <div
                   className="skill-meter-fill"
                   style={{
+                    width: inView ? `${skill.level}%` : '0%',
                     background: `linear-gradient(90deg, ${group.color}80, ${group.color})`,
                     boxShadow: `0 0 8px ${group.glowColor}`,
+                    transition: 'width 1.5s cubic-bezier(0.22, 1, 0.36, 1)',
                   }}
                 />
               </div>
@@ -165,6 +135,6 @@ function BreathingCard({ group }: { group: BreathingSkillGroup }) {
           ))}
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }

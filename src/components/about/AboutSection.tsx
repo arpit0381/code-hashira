@@ -1,15 +1,12 @@
 'use client';
 
-import { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
-import { staggerContainer, fadeInUp } from '@/features/animations/variants';
+import { useScrollReveal } from '@/hooks/useScrollReveal';
 
 export default function AboutSection() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const containerRef = useScrollReveal();
 
   return (
-    <section id="about" className="section-wrapper relative overflow-hidden py-24 md:py-32">
+    <section id="about" ref={containerRef} className="section-wrapper relative overflow-hidden py-24 md:py-32">
       {/* Background Image with Dark Linear Gradient Overlay */}
       <div 
         className="absolute inset-0 z-0 bg-cover bg-center transition-all duration-700"
@@ -25,50 +22,33 @@ export default function AboutSection() {
       {/* Background Breathing Glow */}
       <div className="absolute top-1/2 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full glow-circle-primary pointer-events-none z-[1]" />
 
-      <div className="max-w-6xl mx-auto px-6 relative z-10" ref={ref}>
+      <div className="max-w-6xl mx-auto px-6 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           
           {/* Left Column: Bio & Breathing Style Summary */}
           <div className="lg:col-span-7">
-            <motion.div
-              initial="hidden"
-              animate={isInView ? 'visible' : 'hidden'}
-              variants={staggerContainer}
-              className="space-y-6"
-            >
+            <div className="space-y-6">
               <div className="space-y-2">
-                <motion.p
-                  variants={fadeInUp}
-                  className="text-accent text-sm font-mono tracking-[0.3em] uppercase"
-                >
+                <p className="reveal-title text-accent text-sm font-mono tracking-[0.3em] uppercase">
                   — About Me —
-                </motion.p>
-                <motion.h2
-                  variants={fadeInUp}
-                  className="text-4xl sm:text-5xl font-bold font-heading leading-tight"
-                >
+                </p>
+                <h2 className="reveal-title text-4xl sm:text-5xl font-bold font-heading leading-tight">
                   The <span className="text-gradient-primary">Hashira</span> of Code
-                </motion.h2>
+                </h2>
               </div>
 
-              <motion.div 
-                variants={fadeInUp} 
-                className="space-y-4 text-muted text-base sm:text-lg leading-relaxed"
-              >
+              <div className="reveal-text space-y-4 text-muted text-base sm:text-lg leading-relaxed">
                 <p>
                   I am <span className="text-light font-semibold">Arpit Bajpai</span>, a Full Stack Developer and AI & ML Engineer who treats programming as a craft. Currently pursuing a Bachelor of Computer Applications (BCA), I specialize in forging robust, high-performance web systems and embedding cutting-edge machine learning capabilities into production-ready software.
                 </p>
                 <p>
                   As the founder and lead developer of <span className="text-primary font-semibold">Catalyst Crew</span>, I coordinate teams to create software solutions that solve real-world problems. I thrive under pressure, participate actively in the hackathon circuit, and enjoy building systems that are elegant both inside and out.
                 </p>
-              </motion.div>
+              </div>
 
               {/* Breathing styles cards grid */}
-              <motion.div 
-                variants={fadeInUp} 
-                className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4"
-              >
-                <div className="glass-card p-4 hover:border-water/30 hover:shadow-[0_0_15px_rgba(59,130,246,0.15)] transition-all duration-300">
+              <div className="reveal-grid grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
+                <div className="reveal-grid-item glass-card p-4 hover:border-water/30 hover:shadow-[0_0_15px_rgba(59,130,246,0.15)] transition-all duration-300">
                   <div className="flex items-center gap-3">
                     <span className="w-2.5 h-2.5 rounded-full bg-water animate-pulse" />
                     <h4 className="text-sm font-mono text-light tracking-wide uppercase">Water Style (Frontend)</h4>
@@ -78,7 +58,7 @@ export default function AboutSection() {
                   </p>
                 </div>
 
-                <div className="glass-card p-4 hover:border-flame/30 hover:shadow-[0_0_15px_rgba(249,115,22,0.15)] transition-all duration-300">
+                <div className="reveal-grid-item glass-card p-4 hover:border-flame/30 hover:shadow-[0_0_15px_rgba(249,115,22,0.15)] transition-all duration-300">
                   <div className="flex items-center gap-3">
                     <span className="w-2.5 h-2.5 rounded-full bg-flame animate-pulse" />
                     <h4 className="text-sm font-mono text-light tracking-wide uppercase">Flame Style (Backend)</h4>
@@ -88,7 +68,7 @@ export default function AboutSection() {
                   </p>
                 </div>
 
-                <div className="glass-card p-4 hover:border-mist/30 hover:shadow-[0_0_15px_rgba(139,92,246,0.15)] transition-all duration-300">
+                <div className="reveal-grid-item glass-card p-4 hover:border-mist/30 hover:shadow-[0_0_15px_rgba(139,92,246,0.15)] transition-all duration-300">
                   <div className="flex items-center gap-3">
                     <span className="w-2.5 h-2.5 rounded-full bg-mist animate-pulse" />
                     <h4 className="text-sm font-mono text-light tracking-wide uppercase">Mist Style (AI / ML)</h4>
@@ -98,7 +78,7 @@ export default function AboutSection() {
                   </p>
                 </div>
 
-                <div className="glass-card p-4 hover:border-thunder/30 hover:shadow-[0_0_15px_rgba(234,179,8,0.15)] transition-all duration-300">
+                <div className="reveal-grid-item glass-card p-4 hover:border-thunder/30 hover:shadow-[0_0_15px_rgba(234,179,8,0.15)] transition-all duration-300">
                   <div className="flex items-center gap-3">
                     <span className="w-2.5 h-2.5 rounded-full bg-thunder animate-pulse" />
                     <h4 className="text-sm font-mono text-light tracking-wide uppercase">Thunder Style (Speed)</h4>
@@ -107,18 +87,13 @@ export default function AboutSection() {
                     Rapid deployment, clean code structure, and lightning-fast developer iteration cycles.
                   </p>
                 </div>
-              </motion.div>
-            </motion.div>
+              </div>
+            </div>
           </div>
 
           {/* Right Column: Profile Image */}
           <div className="lg:col-span-5 flex justify-center">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9, x: 50 }}
-              animate={isInView ? { opacity: 1, scale: 1, x: 0 } : { opacity: 0, scale: 0.9, x: 50 }}
-              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
-              className="relative w-full max-w-[360px] aspect-square group"
-            >
+            <div className="reveal-fade relative w-full max-w-[360px] aspect-square group">
               {/* Outer Decorative Neon Glow Backing */}
               <div className="absolute -inset-4 rounded-2xl bg-gradient-to-tr from-primary via-accent to-water opacity-20 blur-xl group-hover:opacity-40 transition-opacity duration-500 pointer-events-none" />
 
@@ -147,7 +122,7 @@ export default function AboutSection() {
               <div className="absolute -top-2 -right-2 w-6 h-6 border-t-2 border-r-2 border-primary/60 group-hover:scale-110 group-hover:border-primary transition-all duration-300" />
               <div className="absolute -bottom-2 -left-2 w-6 h-6 border-b-2 border-l-2 border-primary/60 group-hover:scale-110 group-hover:border-primary transition-all duration-300" />
               <div className="absolute -bottom-2 -right-2 w-6 h-6 border-b-2 border-r-2 border-primary/60 group-hover:scale-110 group-hover:border-primary transition-all duration-300" />
-            </motion.div>
+            </div>
           </div>
 
         </div>

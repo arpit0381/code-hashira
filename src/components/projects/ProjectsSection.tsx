@@ -1,16 +1,15 @@
 'use client';
 
 import { useRef, useState, useMemo } from 'react';
-import { motion, useInView, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { GitBranch, ExternalLink, Search, Star } from 'lucide-react';
 import { STATIC_PROJECTS, PROJECT_CATEGORIES } from '@/features/constants';
-import { staggerContainer, fadeInUp } from '@/features/animations/variants';
-import type { Project, ProjectCategory } from '@/features/types';
+import type { Project } from '@/features/types';
 import { cn } from '@/features/lib/utils';
+import { useScrollReveal } from '@/hooks/useScrollReveal';
 
 export default function ProjectsSection() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const containerRef = useScrollReveal();
 
   const [category, setCategory] = useState<string>('all');
   const [search, setSearch] = useState('');
@@ -45,9 +44,9 @@ export default function ProjectsSection() {
     if (search.trim()) {
       const q = search.toLowerCase();
       results = results.filter(
-        (p) =>
-          p.title.toLowerCase().includes(q) ||
-          p.techStack.some((t) => t.toLowerCase().includes(q))
+          (p) =>
+              p.title.toLowerCase().includes(q) ||
+              p.techStack.some((t) => t.toLowerCase().includes(q))
       );
     }
 
@@ -68,7 +67,7 @@ export default function ProjectsSection() {
   }, [category, search, sort]);
 
   return (
-    <section id="projects" className="section-wrapper relative overflow-hidden py-24 md:py-32">
+    <section id="projects" ref={containerRef} className="section-wrapper relative overflow-hidden py-24 md:py-32">
       {/* Background Image with Dark Linear Gradient Overlay */}
       <div 
         className="absolute inset-0 z-0 bg-cover bg-center transition-all duration-700"
@@ -84,41 +83,22 @@ export default function ProjectsSection() {
       {/* Background glow */}
       <div className="absolute top-1/4 right-1/4 w-[500px] h-[500px] rounded-full glow-circle-accent pointer-events-none z-[1]" />
 
-      <div className="max-w-7xl mx-auto relative z-10" ref={ref}>
+      <div className="max-w-7xl mx-auto relative z-10">
         {/* Section Header */}
-        <motion.div
-          initial="hidden"
-          animate={isInView ? 'visible' : 'hidden'}
-          variants={staggerContainer}
-          className="text-center mb-12"
-        >
-          <motion.p
-            variants={fadeInUp}
-            className="text-accent text-sm font-mono tracking-[0.3em] uppercase mb-3"
-          >
+        <div className="text-center mb-12">
+          <p className="reveal-title text-accent text-sm font-mono tracking-[0.3em] uppercase mb-3">
             — Projects —
-          </motion.p>
-          <motion.h2
-            variants={fadeInUp}
-            className="text-4xl sm:text-5xl font-bold font-heading"
-          >
+          </p>
+          <h2 className="reveal-title text-4xl sm:text-5xl font-bold font-heading">
             Forged in <span className="text-gradient-accent">Code</span>
-          </motion.h2>
-          <motion.p
-            variants={fadeInUp}
-            className="mt-4 text-muted max-w-2xl mx-auto"
-          >
+          </h2>
+          <p className="reveal-text mt-4 text-muted max-w-2xl mx-auto">
             Each project is a battle won — built with precision, passion, and purpose.
-          </motion.p>
-        </motion.div>
+          </p>
+        </div>
 
         {/* Filters */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.3 }}
-          className="mb-10 space-y-4"
-        >
+        <div className="reveal-text mb-10 space-y-4">
           {/* Category Pills */}
           <div className="flex flex-wrap items-center justify-center gap-2">
             {PROJECT_CATEGORIES.map((cat) => (
@@ -127,7 +107,7 @@ export default function ProjectsSection() {
                 onClick={() => setCategory(cat.value)}
                 suppressHydrationWarning
                 className={cn(
-                  'px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200',
+                  'px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 cursor-pointer',
                   category === cat.value
                     ? 'bg-accent text-dark'
                     : 'bg-white/5 text-muted hover:text-light hover:bg-white/10 border border-white/5'
@@ -162,7 +142,7 @@ export default function ProjectsSection() {
               <option value="alpha">Alphabetical</option>
             </select>
           </div>
-        </motion.div>
+        </div>
 
         {/* Project Cards Grid */}
         <motion.div
@@ -184,13 +164,9 @@ export default function ProjectsSection() {
 
         {/* Empty state */}
         {filteredProjects.length === 0 && (
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-center text-muted py-16"
-          >
+          <p className="text-center text-muted py-16">
             No projects found. Try a different filter.
-          </motion.p>
+          </p>
         )}
       </div>
     </section>
@@ -215,30 +191,25 @@ function ProjectCard({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.9 }}
       transition={{
-        duration: 0.5,
-        delay: index * 0.05,
-        ease: [0.22, 1, 0.36, 1],
+        duration: 0.4,
+        delay: index * 0.03,
+        ease: 'easeOut',
       }}
-      whileHover={{ y: -10 }}
-      className="group"
+      className="group hover:-translate-y-2 transition-transform duration-300"
     >
-      <div className="glass-card overflow-hidden h-full flex flex-col">
+      <div className="glass-card overflow-hidden h-full flex flex-col relative">
         {/* Project Image / Placeholder */}
         <div className="relative h-48 bg-gradient-to-br from-primary/10 via-dark-card to-accent/5 overflow-hidden">
           {/* Floating animation overlay */}
-          <motion.div
-            animate={{ y: [0, -5, 0] }}
-            transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-            className="absolute inset-0 flex items-center justify-center"
-          >
+          <div className="absolute inset-0 flex items-center justify-center">
             <div className="text-4xl font-bold font-heading text-white/5">
               {project.title.charAt(0)}
             </div>
-          </motion.div>
+          </div>
 
           {/* Featured badge */}
           {project.featured && (
-            <div className="absolute top-3 left-3 px-2.5 py-1 text-xs font-semibold text-dark bg-accent rounded-md">
+            <div className="absolute top-3 left-3 px-2.5 py-1 text-xs font-semibold text-dark bg-accent rounded-md select-none">
               Featured
             </div>
           )}
@@ -250,7 +221,7 @@ function ProjectCard({
               onToggleFavorite(project.id);
             }}
             suppressHydrationWarning
-            className="absolute top-3 right-3 p-2 rounded-full bg-dark/60 backdrop-blur-sm hover:bg-dark/80 transition-colors"
+            className="absolute top-3 right-3 p-2 rounded-full bg-dark/60 backdrop-blur-sm hover:bg-dark/80 transition-colors cursor-pointer"
           >
             <Star
               size={14}
@@ -259,7 +230,7 @@ function ProjectCard({
           </button>
 
           {/* Hover overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-dark-card via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          <div className="absolute inset-0 bg-gradient-to-t from-dark-card via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
         </div>
 
         {/* Content */}

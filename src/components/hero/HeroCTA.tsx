@@ -39,7 +39,6 @@ export default function HeroCTA() {
         whileTap={{ scale: 0.97 }}
         suppressHydrationWarning
         onClick={() => {
-          // TODO: Fetch from Supabase resume table
           window.open('/resume.pdf', '_blank');
         }}
         className="group relative flex items-center gap-2 px-8 py-3.5 border border-white/10 hover:border-white/30 text-muted hover:text-light font-semibold rounded-lg transition-all duration-200"

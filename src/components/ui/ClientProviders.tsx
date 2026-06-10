@@ -3,6 +3,13 @@
 import { useEffect } from 'react';
 import { usePortfolioStore } from '@/features/store';
 import { SECTION_IDS } from '@/features/constants';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
+
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+}
 
 
 export default function ClientProviders({
@@ -41,6 +48,33 @@ export default function ClientProviders({
       observers.forEach((o) => o.disconnect());
     };
   }, [setActiveSection, markSectionVisited]);
+
+  // GSAP Smooth scroll click interceptor
+  useEffect(() => {
+    const handleAnchorClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      const anchor = target.closest('a');
+      if (!anchor) return;
+
+      const href = anchor.getAttribute('href');
+      if (href && href.startsWith('#')) {
+        const id = href.substring(1);
+        const el = document.getElementById(id || 'home');
+        if (el) {
+          e.preventDefault();
+          gsap.to(window, {
+            duration: 1.2,
+            scrollTo: { y: el, offsetY: 80 },
+            ease: 'power3.out',
+            overwrite: 'auto',
+          });
+        }
+      }
+    };
+
+    document.addEventListener('click', handleAnchorClick);
+    return () => document.removeEventListener('click', handleAnchorClick);
+  }, []);
 
   // 'D' key toggle theme
   useEffect(() => {

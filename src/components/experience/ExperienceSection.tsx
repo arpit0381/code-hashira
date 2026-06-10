@@ -1,17 +1,14 @@
 'use client';
 
-import { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
 import { EXPERIENCES } from '@/features/constants';
-import { staggerContainer, fadeInUp } from '@/features/animations/variants';
 import type { Experience } from '@/features/types';
+import { useScrollReveal } from '@/hooks/useScrollReveal';
 
 export default function ExperienceSection() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const containerRef = useScrollReveal();
 
   return (
-    <section id="experience" className="section-wrapper relative overflow-hidden py-24 md:py-32">
+    <section id="experience" ref={containerRef} className="section-wrapper relative overflow-hidden py-24 md:py-32">
       {/* Background Image with Dark Linear Gradient Overlay */}
       <div 
         className="absolute inset-0 z-0 bg-cover bg-center transition-all duration-700"
@@ -27,42 +24,30 @@ export default function ExperienceSection() {
       {/* Background glow */}
       <div className="absolute top-1/2 left-0 w-[400px] h-[400px] rounded-full glow-circle-flame pointer-events-none z-[1]" />
 
-      <div className="max-w-5xl mx-auto relative z-10" ref={ref}>
+      <div className="max-w-5xl mx-auto relative z-10">
         {/* Section Header */}
-        <motion.div
-          initial="hidden"
-          animate={isInView ? 'visible' : 'hidden'}
-          variants={staggerContainer}
-          className="text-center mb-16"
-        >
-          <motion.p
-            variants={fadeInUp}
-            className="text-accent text-sm font-mono tracking-[0.3em] uppercase mb-3"
-          >
+        <div className="text-center mb-16">
+          <p className="reveal-title text-accent text-sm font-mono tracking-[0.3em] uppercase mb-3">
             — Experience —
-          </motion.p>
-          <motion.h2
-            variants={fadeInUp}
-            className="text-4xl sm:text-5xl font-bold font-heading"
-          >
+          </p>
+          <h2 className="reveal-title text-4xl sm:text-5xl font-bold font-heading">
             Battle <span className="text-gradient-fire">Chronicles</span>
-          </motion.h2>
-          <motion.p
-            variants={fadeInUp}
-            className="mt-4 text-muted max-w-2xl mx-auto"
-          >
+          </h2>
+          <p className="reveal-text mt-4 text-muted max-w-2xl mx-auto">
             Every mission has shaped the warrior. From startups to hackathons,
             each experience forged stronger skills and deeper wisdom.
-          </motion.p>
-        </motion.div>
+          </p>
+        </div>
 
         {/* Timeline */}
-        <div className="relative">
+        <div className="reveal-grid relative">
           {/* Center line */}
           <div className="absolute left-4 md:left-8 top-0 bottom-0 w-[2px] bg-gradient-to-b from-transparent via-flame/30 to-transparent" />
 
-          {EXPERIENCES.map((exp, index) => (
-            <ExperienceCard key={exp.id} experience={exp} index={index} />
+          {EXPERIENCES.map((exp) => (
+            <div key={exp.id} className="reveal-grid-item">
+              <ExperienceCard experience={exp} />
+            </div>
           ))}
         </div>
       </div>
@@ -72,38 +57,19 @@ export default function ExperienceSection() {
 
 function ExperienceCard({
   experience,
-  index,
 }: {
   experience: Experience;
-  index: number;
 }) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-50px' });
-
   return (
-    <div ref={ref} className="relative flex items-start mb-12 ml-4 md:ml-8">
+    <div className="relative flex items-start mb-12 ml-4 md:ml-8">
       {/* Dot */}
-      <motion.div
-        initial={{ scale: 0 }}
-        animate={isInView ? { scale: 1 } : { scale: 0 }}
-        transition={{ duration: 0.4, delay: 0.2 }}
-        className="absolute -left-4 md:-left-8 translate-x-[-50%] w-4 h-4 rounded-full bg-flame border-2 border-dark z-10"
-      >
+      <div className="absolute -left-4 md:-left-8 translate-x-[-50%] w-4 h-4 rounded-full bg-flame border-2 border-dark z-10">
         <div className="absolute inset-0 rounded-full bg-flame animate-ping opacity-20" />
-      </motion.div>
+      </div>
 
       {/* Card */}
-      <motion.div
-        initial={{ opacity: 0, x: -40 }}
-        animate={isInView ? { opacity: 1, x: 0 } : {}}
-        transition={{
-          duration: 0.7,
-          delay: index * 0.1,
-          ease: [0.22, 1, 0.36, 1],
-        }}
-        className="ml-8 w-full"
-      >
-        <div className="glass-card p-6 border-l-2 border-l-flame/40 hover:border-l-flame transition-colors group">
+      <div className="ml-8 w-full">
+        <div className="glass-card p-6 border-l-2 border-l-flame/40 hover:border-l-flame transition-colors group relative">
           {/* Header */}
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3">
             <div>
@@ -146,7 +112,7 @@ function ExperienceCard({
             ))}
           </div>
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 }

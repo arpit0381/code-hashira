@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Sparkles } from 'lucide-react';
 import { NAV_LINKS } from '@/features/constants';
 import { usePortfolioStore } from '@/features/store';
 import { cn } from '@/features/lib/utils';
@@ -59,68 +59,82 @@ export default function Navbar() {
         />
       </div>
 
-      {/* Navbar */}
+      {/* Floating Capsule Navbar */}
       <motion.nav
         variants={navbarVariants}
         animate={hidden ? 'hidden' : 'visible'}
         className={cn(
-          'fixed top-0 left-0 w-full z-50 transition-all duration-300',
+          'fixed left-1/2 -translate-x-1/2 z-50 w-[95%] sm:w-[90%] max-w-5xl rounded-full border transition-all duration-500',
           scrolled
-            ? 'glass-strong py-3'
-            : 'bg-transparent py-5'
+            ? 'top-4 py-2 px-6 bg-dark-card/90 border-accent/20 shadow-[0_0_20px_rgba(0,255,156,0.1)] backdrop-blur-md'
+            : 'top-6 py-4 px-8 bg-white/[0.02] border-white/5 backdrop-blur-sm'
         )}
       >
-        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-          {/* Logo */}
-          <a href="#home" className="relative group">
-            <span className="text-xl font-bold font-heading tracking-wider">
-              <span className="text-primary">A</span>
+        <div className="flex items-center justify-between w-full">
+          {/* Logo with Kanji Badge */}
+          <a href="#home" className="relative group flex items-center gap-2">
+            <span className="text-xl font-bold font-heading tracking-wider flex items-center">
+              <span className="text-primary font-black">A</span>
               <span className="text-light">RPIT</span>
+            </span>
+            {/* Calligraphic Hashira badge */}
+            <span className="text-[10px] bg-primary/10 border border-primary/20 text-primary px-1.5 py-0.5 rounded font-mono font-bold select-none">
+              柱 (Hashira)
             </span>
             <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-accent group-hover:w-full transition-all duration-300" />
           </a>
 
-          {/* Desktop Links */}
+          {/* Nav Links */}
           <div className="hidden md:flex items-center gap-1">
-            {NAV_LINKS.map((link) => (
-              <a
-                key={link.sectionId}
-                href={link.href}
-                className={cn(
-                  'relative px-4 py-2 text-sm font-medium tracking-wide transition-colors duration-200 rounded-lg magnetic-hover',
-                  activeSection === link.sectionId
-                    ? 'text-accent'
-                    : 'text-muted hover:text-light'
-                )}
-              >
-                {link.label}
-                {activeSection === link.sectionId && (
-                  <motion.span
-                    layoutId="activeSection"
-                    className="absolute inset-0 bg-accent/5 rounded-lg border border-accent/20"
-                    transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-                  />
-                )}
-              </a>
-            ))}
+            {NAV_LINKS.map((link) => {
+              const isActive = activeSection === link.sectionId;
+              return (
+                <a
+                  key={link.sectionId}
+                  href={link.href}
+                  className={cn(
+                    'relative px-4 py-2 text-sm font-medium tracking-wide transition-all duration-300 rounded-full group overflow-hidden',
+                    isActive ? 'text-accent' : 'text-muted hover:text-light'
+                  )}
+                >
+                  {/* Subtle slash background hover effect */}
+                  <span className="absolute inset-0 bg-accent/5 opacity-0 group-hover:opacity-100 skew-x-[-20deg] scale-x-0 group-hover:scale-x-100 transition-all duration-300 origin-center" />
+                  
+                  {/* Calligraphic brackets appearing on hover/active */}
+                  <span className="transition-all duration-300 opacity-0 group-hover:opacity-100 mr-0.5 group-hover:mr-1">【</span>
+                  {link.label}
+                  <span className="transition-all duration-300 opacity-0 group-hover:opacity-100 ml-0.5 group-hover:ml-1">】</span>
+
+                  {isActive && (
+                    <motion.span
+                      layoutId="activeSection"
+                      className="absolute inset-0 border border-accent/30 bg-accent/[0.03] rounded-full z-[-1]"
+                      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                    />
+                  )}
+                </a>
+              );
+            })}
           </div>
 
-          {/* Hire Me Button (Desktop) */}
-          <a
-            href="#contact"
-            className="hidden md:block px-5 py-2 text-sm font-semibold text-dark bg-accent rounded-lg hover:bg-accent-dim transition-colors duration-200"
-          >
-            Hire Me
-          </a>
+          {/* CTA Action */}
+          <div className="hidden md:flex items-center gap-4">
+            <a
+              href="#contact"
+              className="relative group overflow-hidden px-5 py-2 text-sm font-semibold text-dark bg-accent rounded-full hover:bg-accent-dim shadow-[0_0_15px_rgba(0,255,156,0.15)] hover:shadow-[0_0_25px_rgba(0,255,156,0.3)] transition-all duration-300"
+            >
+              <span className="relative z-10">Hire Me</span>
+            </a>
+          </div>
 
           {/* Mobile Toggle */}
           <button
             onClick={() => setIsOpen(!isOpen)}
             suppressHydrationWarning
-            className="md:hidden relative z-50 p-2 text-light"
+            className="md:hidden relative z-50 p-2 text-light hover:text-accent transition-colors"
             aria-label="Toggle menu"
           >
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
+            {isOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>
       </motion.nav>
@@ -134,7 +148,7 @@ export default function Navbar() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40"
+              className="fixed inset-0 bg-black/70 backdrop-blur-md z-45"
               onClick={() => setIsOpen(false)}
             />
 
@@ -143,10 +157,15 @@ export default function Navbar() {
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
-              transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-              className="fixed top-0 right-0 w-[280px] h-full bg-dark-card border-l border-border z-50 p-8 pt-20 flex flex-col"
+              transition={{ type: 'spring', stiffness: 350, damping: 35 }}
+              className="fixed top-0 right-0 w-[290px] h-full bg-dark-card border-l border-white/5 z-50 p-8 pt-24 flex flex-col justify-between"
             >
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-3">
+                <div className="border-b border-white/5 pb-4 mb-4">
+                  <span className="text-xs font-mono text-muted tracking-widest uppercase flex items-center gap-1.5">
+                    <Sparkles size={12} className="text-accent" /> Breathing Styles
+                  </span>
+                </div>
                 {NAV_LINKS.map((link, i) => (
                   <motion.a
                     key={link.sectionId}
@@ -156,22 +175,27 @@ export default function Navbar() {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.05 }}
                     className={cn(
-                      'px-4 py-3 text-lg font-medium rounded-lg transition-colors',
+                      'px-4 py-3 text-lg font-medium rounded-xl transition-all duration-200 flex items-center justify-between',
                       activeSection === link.sectionId
-                        ? 'text-accent bg-accent/5'
+                        ? 'text-accent bg-accent/5 border border-accent/20'
                         : 'text-muted hover:text-light hover:bg-white/5'
                     )}
                   >
-                    {link.label}
+                    <span>{link.label}</span>
+                    {activeSection === link.sectionId && (
+                      <span className="text-xs bg-accent/20 text-accent px-1.5 py-0.5 rounded font-mono font-bold">
+                        ON
+                      </span>
+                    )}
                   </motion.a>
                 ))}
               </div>
 
-              <div className="mt-auto">
+              <div className="pt-8 border-t border-white/5">
                 <a
                   href="#contact"
                   onClick={() => setIsOpen(false)}
-                  className="block w-full text-center px-5 py-3 text-sm font-semibold text-dark bg-accent rounded-lg hover:bg-accent-dim transition-colors"
+                  className="block w-full text-center px-5 py-3 text-sm font-semibold text-dark bg-accent rounded-xl hover:bg-accent-dim shadow-[0_0_15px_rgba(0,255,156,0.15)] transition-all duration-300"
                 >
                   Hire Me
                 </a>

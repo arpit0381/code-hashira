@@ -1,18 +1,15 @@
 'use client';
 
-import { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
 import CountUp from 'react-countup';
 import { useInView as useRIV } from 'react-intersection-observer';
 import { ACHIEVEMENTS } from '@/features/constants';
-import { staggerContainer, fadeInUp } from '@/features/animations/variants';
+import { useScrollReveal } from '@/hooks/useScrollReveal';
 
 export default function AchievementsSection() {
-  const sectionRef = useRef(null);
-  const isInView = useInView(sectionRef, { once: true, margin: '-100px' });
+  const containerRef = useScrollReveal();
 
   return (
-    <section id="achievements" className="section-wrapper relative overflow-hidden py-24 md:py-32">
+    <section id="achievements" ref={containerRef} className="section-wrapper relative overflow-hidden py-24 md:py-32">
       {/* Background Image with Dark Linear Gradient Overlay */}
       <div 
         className="absolute inset-0 z-0 bg-cover bg-center transition-all duration-700"
@@ -28,41 +25,25 @@ export default function AchievementsSection() {
       {/* Background glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] rounded-full glow-circle-accent pointer-events-none z-[1]" />
 
-      <div className="max-w-5xl mx-auto relative z-10" ref={sectionRef}>
+      <div className="max-w-5xl mx-auto relative z-10">
         {/* Section Header */}
-        <motion.div
-          initial="hidden"
-          animate={isInView ? 'visible' : 'hidden'}
-          variants={staggerContainer}
-          className="text-center mb-14"
-        >
-          <motion.p
-            variants={fadeInUp}
-            className="text-accent text-sm font-mono tracking-[0.3em] uppercase mb-3"
-          >
+        <div className="text-center mb-14">
+          <p className="reveal-title text-accent text-sm font-mono tracking-[0.3em] uppercase mb-3">
             — Achievements —
-          </motion.p>
-          <motion.h2
-            variants={fadeInUp}
-            className="text-4xl sm:text-5xl font-bold font-heading"
-          >
+          </p>
+          <h2 className="reveal-title text-4xl sm:text-5xl font-bold font-heading">
             Numbers That <span className="text-gradient-accent">Speak</span>
-          </motion.h2>
-        </motion.div>
+          </h2>
+        </div>
 
         {/* Stats Grid */}
-        <motion.div
-          initial="hidden"
-          animate={isInView ? 'visible' : 'hidden'}
-          variants={staggerContainer}
-          className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6"
-        >
+        <div className="reveal-grid grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6">
           {ACHIEVEMENTS.map((achievement) => (
-            <motion.div key={achievement.id} variants={fadeInUp}>
+            <div key={achievement.id} className="reveal-grid-item">
               <StatCard achievement={achievement} />
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
@@ -74,7 +55,7 @@ function StatCard({ achievement }: { achievement: (typeof ACHIEVEMENTS)[0] }) {
   return (
     <div
       ref={ref}
-      className="glass-card p-6 text-center group hover:glow-accent transition-all"
+      className="glass-card p-6 text-center group hover:glow-accent transition-all relative"
     >
       {/* Icon */}
       <div className="text-3xl mb-3">{achievement.icon}</div>
