@@ -200,12 +200,19 @@ function ProjectCard({
       <div className="glass-card overflow-hidden h-full flex flex-col relative">
         {/* Project Image / Placeholder */}
         <div className="relative h-48 bg-gradient-to-br from-primary/10 via-dark-card to-accent/5 overflow-hidden">
-          {/* Floating animation overlay */}
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="text-4xl font-bold font-heading text-white/5">
-              {project.title.charAt(0)}
+          {project.imageUrl ? (
+            <img
+              src={project.imageUrl}
+              alt={project.title}
+              className="absolute inset-0 w-full h-full object-cover object-top opacity-80 group-hover:opacity-100 transition-all duration-300 group-hover:scale-105"
+            />
+          ) : (
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="text-4xl font-bold font-heading text-white/5">
+                {project.title.charAt(0)}
+              </div>
             </div>
-          </div>
+          )}
 
           {/* Featured badge */}
           {project.featured && (

@@ -20,7 +20,7 @@ const SYSTEM_PROMPT = `You are Arpit Bajpai's personal AI assistant. You know ev
 ## Experience & Projects
 - **Sulax Solar Industries** (July 2024 – Present): Website Developer. Built professional solar energy website, responsive UI/UX.
 - **Posterwa** (Jan 2024 – Jan 2025): Sales Captain. Led regional poster sales, achieved 200% targets in 2 months.
-- **Key Projects**: FormStuff (React/Node/PostgreSQL), LifeReceipt (Flutter/Firebase), Sulax Solar, Om Power Solution, PSIT's Ignitia 2K26 (Next.js/Go), ClubSphere, and AI Study Companion.
+- **Key Projects**: Synapse Lite (Task Management & WebRTC), FormStuff (React/Node/PostgreSQL), LifeReceipt (Flutter/Firebase), Sulax Solar, Om Power Solution, PSIT's Ignitia 2K26, and ClubSphere.
 
 ## Key Achievements & Certifications
 - Certifications: HTML/CSS/JS/Python/C (Infosys), Power BI/Node.js (Udemy), Tech Simulation (Deloitte)

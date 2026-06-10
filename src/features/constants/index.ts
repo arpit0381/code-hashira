@@ -289,16 +289,16 @@ export const STATIC_PROJECTS: Project[] = [
     imageUrl: '/projects/neural.jpg',
   },
   {
-    id: 'ai-companion',
-    title: 'AI Study Companion',
+    id: 'synapse-lite',
+    title: 'Synapse Lite',
     description:
-      'An intelligent study platform powered by AI that generates personalized study plans, quizzes, and explanations based on uploaded material.',
-    category: 'ai',
-    techStack: ['Next.js', 'OpenAI API', 'Tailwind CSS', 'LangChain'],
-    githubUrl: 'https://github.com/arpit-bajpai',
-    liveUrl: '#',
+      'A powerful task management and team collaboration platform better than Slack. Features real-time messaging, task tracking, and seamless communication.',
+    category: 'fullstack',
+    techStack: ['Next.js', 'Node.js', 'Express.js', 'PostgreSQL', 'WebRTC'],
+    githubUrl: 'https://github.com/arpit0381',
+    liveUrl: 'https://synapse.arpitbajpai.in',
     featured: true,
-    imageUrl: '/projects/ai-study.jpg',
+    imageUrl: '', // Blank placeholder so the letter initial shows
   },
 ];
 
