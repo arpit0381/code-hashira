@@ -3,14 +3,13 @@
 import { useEffect } from 'react';
 import { usePortfolioStore } from '@/features/store';
 import { SECTION_IDS } from '@/features/constants';
-import { useSmoothScroll } from '@/features/hooks/useSmoothScroll';
+
 
 export default function ClientProviders({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  useSmoothScroll();
 
   const { setActiveSection, markSectionVisited } = usePortfolioStore();
 

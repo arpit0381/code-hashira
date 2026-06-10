@@ -1,21 +1,12 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import dynamic from 'next/dynamic';
 import gsap from 'gsap';
-import { useInView } from 'framer-motion';
 import HeroCTA from '@/components/hero/HeroCTA';
-
-const HeroScene = dynamic(() => import('@/features/three/HeroScene'), {
-  ssr: false,
-  loading: () => (
-    <div className="absolute inset-0 bg-dark" />
-  ),
-});
+import ParticlesBackground from '@/components/hero/ParticlesBackground';
 
 export default function HeroSection() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(containerRef, { margin: '0px 0px -200px 0px' });
 
   useEffect(() => {
     // GSAP entry animation timeline
@@ -112,10 +103,8 @@ export default function HeroSection() {
         }}
       />
 
-      {/* Three.js Background Scene */}
-      <div className="absolute inset-0 z-[1] pointer-events-none">
-        {isInView && <HeroScene />}
-      </div>
+      {/* Lightweight CSS Particles */}
+      <ParticlesBackground />
 
       {/* Dark gradient overlay */}
       <div className="absolute inset-0 z-[2] bg-gradient-to-b from-dark/20 via-dark/10 to-dark pointer-events-none" />
