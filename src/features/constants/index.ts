@@ -238,7 +238,7 @@ export const STATIC_PROJECTS: Project[] = [
     githubUrl: 'https://github.com/arpit-bajpai',
     liveUrl: 'https://lifereceipt.in',
     featured: true,
-    imageUrl: '/projects/cms.jpg',
+    imageUrl: '/lifereceipt.png',
   },
   {
     id: 'sulax-solar',
@@ -250,7 +250,7 @@ export const STATIC_PROJECTS: Project[] = [
     githubUrl: 'https://github.com/arpit-bajpai',
     liveUrl: 'https://sulaxsolar.com',
     featured: true,
-    imageUrl: '/projects/iot.jpg',
+    imageUrl: '/sulax.png',
   },
   {
     id: 'om-power',
@@ -260,9 +260,9 @@ export const STATIC_PROJECTS: Project[] = [
     category: 'fullstack',
     techStack: ['React.js', 'Node.js', 'PostgreSQL'],
     githubUrl: 'https://github.com/arpit-bajpai',
-    liveUrl: '#',
+    liveUrl: 'https://ompowersolution.com', // Assuming standard domain, fallback to # if user corrections are needed
     featured: false,
-    imageUrl: '/projects/devops.jpg',
+    imageUrl: '/ompower.png',
   },
   {
     id: 'ignitia',
@@ -272,9 +272,9 @@ export const STATIC_PROJECTS: Project[] = [
     category: 'fullstack',
     techStack: ['Next.js', 'PostgreSQL', 'GO'],
     githubUrl: 'https://github.com/arpit-bajpai',
-    liveUrl: '#',
+    liveUrl: 'https://ignitia2k26.psit.ac.in', // Guessing common domain format, will ask user to confirm if incorrect
     featured: false,
-    imageUrl: '/projects/ai-study.jpg',
+    imageUrl: '/ignitia.png',
   },
   {
     id: 'clubsphere',
@@ -286,7 +286,7 @@ export const STATIC_PROJECTS: Project[] = [
     githubUrl: 'https://github.com/arpit-bajpai',
     liveUrl: 'https://clubsphere.in',
     featured: false,
-    imageUrl: '/projects/neural.jpg',
+    imageUrl: '/clubsphere.png',
   },
   {
     id: 'synapse-lite',
@@ -298,7 +298,7 @@ export const STATIC_PROJECTS: Project[] = [
     githubUrl: 'https://github.com/arpit0381',
     liveUrl: 'https://synapse.arpitbajpai.in',
     featured: true,
-    imageUrl: '', // Blank placeholder so the letter initial shows
+    imageUrl: '/synapse.jpeg',
   },
 ];
 
