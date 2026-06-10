@@ -177,8 +177,10 @@ export class FrameLoader {
         const frameIndex = queue[nextQueueIndex++];
         try {
           await this.loadFramePromise(frameIndex);
-        } catch (e) {
-          console.error(`Error loading frame ${frameIndex} in worker`, e);
+        } catch (e: any) {
+          if (!this.isDestroyed && e?.message !== 'Loader destroyed') {
+            console.error(`Error loading frame ${frameIndex} in worker`, e);
+          }
         }
       }
     };

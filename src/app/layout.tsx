@@ -21,6 +21,7 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://arpit-bajpai.dev'),
   title: 'Arpit Bajpai — Full Stack Developer & AI Engineer',
   description:
     'Portfolio of Arpit Bajpai — BCA 3rd Year Student, Full Stack Developer, AI & ML Engineer, and Founder. Cutting through complexity with code and intelligence.',

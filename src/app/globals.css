@@ -318,3 +318,35 @@ body {
     padding: 3rem 1.25rem;
   }
 }
+
+/* ── Hardware-Accelerated Ambient Glows (Replaces expensive CSS blurs) ── */
+.glow-circle-primary {
+  background: radial-gradient(circle, rgba(214, 40, 40, 0.05) 0%, rgba(214, 40, 40, 0) 70%);
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+}
+.glow-circle-accent {
+  background: radial-gradient(circle, rgba(0, 255, 156, 0.05) 0%, rgba(0, 255, 156, 0) 70%);
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+}
+.glow-circle-flame {
+  background: radial-gradient(circle, rgba(249, 115, 22, 0.05) 0%, rgba(249, 115, 22, 0) 70%);
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+}
+.glow-circle-thunder {
+  background: radial-gradient(circle, rgba(234, 179, 8, 0.05) 0%, rgba(234, 179, 8, 0) 70%);
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+}
+.glow-circle-mist {
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.05) 0%, rgba(139, 92, 246, 0) 70%);
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+}
+.glow-circle-water {
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.05) 0%, rgba(59, 130, 246, 0) 70%);
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+}

@@ -12,11 +12,23 @@ export default function AchievementsSection() {
   const isInView = useInView(sectionRef, { once: true, margin: '-100px' });
 
   return (
-    <section id="achievements" className="section-wrapper relative">
-      {/* Background glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] rounded-full bg-accent/5 blur-[120px] pointer-events-none" />
+    <section id="achievements" className="section-wrapper relative overflow-hidden py-24 md:py-32">
+      {/* Background Image with Dark Linear Gradient Overlay */}
+      <div 
+        className="absolute inset-0 z-0 bg-cover bg-center transition-all duration-700"
+        style={{
+          backgroundImage: 'linear-gradient(rgba(5, 5, 5, 0.75), rgba(5, 5, 5, 0.95)), url("/achievements_bg.png")',
+          willChange: 'transform, opacity',
+        }}
+      />
 
-      <div className="max-w-5xl mx-auto" ref={sectionRef}>
+      {/* Dark overlay for extra text contrast */}
+      <div className="absolute inset-0 z-[1] bg-gradient-to-b from-dark/10 via-dark/40 to-dark pointer-events-none" />
+
+      {/* Background glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] rounded-full glow-circle-accent pointer-events-none z-[1]" />
+
+      <div className="max-w-5xl mx-auto relative z-10" ref={sectionRef}>
         {/* Section Header */}
         <motion.div
           initial="hidden"

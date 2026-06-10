@@ -90,9 +90,9 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="contact" className="section-wrapper relative">
+    <section id="contact" className="section-wrapper relative overflow-hidden">
       {/* Background glow */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] rounded-full bg-primary/5 blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] rounded-full glow-circle-primary pointer-events-none" />
 
       <div className="max-w-3xl mx-auto" ref={ref}>
         {/* Section Header */}

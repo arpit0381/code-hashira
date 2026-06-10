@@ -11,11 +11,23 @@ export default function SkillsSection() {
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <section id="skills" className="section-wrapper relative">
-      {/* Background glow */}
-      <div className="absolute top-1/3 right-0 w-[500px] h-[500px] rounded-full bg-primary/5 blur-[120px] pointer-events-none" />
+    <section id="skills" className="section-wrapper relative overflow-hidden py-24 md:py-32">
+      {/* Background Image with Dark Linear Gradient Overlay */}
+      <div 
+        className="absolute inset-0 z-0 bg-cover bg-center transition-all duration-700"
+        style={{
+          backgroundImage: 'linear-gradient(rgba(5, 5, 5, 0.75), rgba(5, 5, 5, 0.95)), url("/skills_bg.png")',
+          willChange: 'transform, opacity',
+        }}
+      />
 
-      <div className="max-w-6xl mx-auto" ref={ref}>
+      {/* Dark overlay for extra text contrast */}
+      <div className="absolute inset-0 z-[1] bg-gradient-to-b from-dark/10 via-dark/40 to-dark pointer-events-none" />
+
+      {/* Background glow */}
+      <div className="absolute top-1/3 right-0 w-[500px] h-[500px] rounded-full glow-circle-primary pointer-events-none z-[1]" />
+
+      <div className="max-w-6xl mx-auto relative z-10" ref={ref}>
         {/* Section Header */}
         <motion.div
           initial="hidden"

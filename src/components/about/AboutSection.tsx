@@ -1,8 +1,7 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
+import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { TIMELINE_NODES } from '@/features/constants';
 import { staggerContainer, fadeInUp } from '@/features/animations/variants';
 
 export default function AboutSection() {
@@ -10,118 +9,149 @@ export default function AboutSection() {
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <section id="about" className="section-wrapper relative">
-      {/* Background breathing glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-water/5 blur-[120px] pointer-events-none" />
+    <section id="about" className="section-wrapper relative overflow-hidden py-24 md:py-32">
+      {/* Background Image with Dark Linear Gradient Overlay */}
+      <div 
+        className="absolute inset-0 z-0 bg-cover bg-center transition-all duration-700"
+        style={{
+          backgroundImage: 'linear-gradient(rgba(5, 5, 5, 0.7), rgba(5, 5, 5, 0.95)), url("/about_bg.png")',
+          willChange: 'transform, opacity',
+        }}
+      />
 
-      <div className="max-w-6xl mx-auto" ref={ref}>
-        {/* Section Header */}
-        <motion.div
-          initial="hidden"
-          animate={isInView ? 'visible' : 'hidden'}
-          variants={staggerContainer}
-          className="text-center mb-16"
-        >
-          <motion.p
-            variants={fadeInUp}
-            className="text-accent text-sm font-mono tracking-[0.3em] uppercase mb-3"
-          >
-            — About Me —
-          </motion.p>
-          <motion.h2
-            variants={fadeInUp}
-            className="text-4xl sm:text-5xl font-bold font-heading"
-          >
-            The <span className="text-gradient-primary">Story</span> So Far
-          </motion.h2>
-          <motion.p
-            variants={fadeInUp}
-            className="mt-4 text-muted max-w-2xl mx-auto"
-          >
-            Every master was once a beginner. Here&apos;s the journey from
-            curiosity to creation — told chapter by chapter.
-          </motion.p>
-        </motion.div>
+      {/* Dark overlay for extra text contrast */}
+      <div className="absolute inset-0 z-[1] bg-gradient-to-b from-dark/10 via-dark/40 to-dark pointer-events-none" />
 
-        {/* Timeline */}
-        <div className="relative">
-          {/* Center line */}
-          <div className="absolute left-4 md:left-1/2 md:-translate-x-px top-0 bottom-0 w-[2px] bg-gradient-to-b from-transparent via-primary/40 to-transparent" />
+      {/* Background Breathing Glow */}
+      <div className="absolute top-1/2 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full glow-circle-primary pointer-events-none z-[1]" />
 
-          {TIMELINE_NODES.map((node, index) => (
-            <TimelineCard
-              key={node.id}
-              node={node}
-              index={index}
-              isRight={index % 2 === 1}
-            />
-          ))}
+      <div className="max-w-6xl mx-auto px-6 relative z-10" ref={ref}>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+          
+          {/* Left Column: Bio & Breathing Style Summary */}
+          <div className="lg:col-span-7">
+            <motion.div
+              initial="hidden"
+              animate={isInView ? 'visible' : 'hidden'}
+              variants={staggerContainer}
+              className="space-y-6"
+            >
+              <div className="space-y-2">
+                <motion.p
+                  variants={fadeInUp}
+                  className="text-accent text-sm font-mono tracking-[0.3em] uppercase"
+                >
+                  — About Me —
+                </motion.p>
+                <motion.h2
+                  variants={fadeInUp}
+                  className="text-4xl sm:text-5xl font-bold font-heading leading-tight"
+                >
+                  The <span className="text-gradient-primary">Hashira</span> of Code
+                </motion.h2>
+              </div>
+
+              <motion.div 
+                variants={fadeInUp} 
+                className="space-y-4 text-muted text-base sm:text-lg leading-relaxed"
+              >
+                <p>
+                  I am <span className="text-light font-semibold">Arpit Bajpai</span>, a Full Stack Developer and AI & ML Engineer who treats programming as a craft. Currently pursuing a Bachelor of Computer Applications (BCA), I specialize in forging robust, high-performance web systems and embedding cutting-edge machine learning capabilities into production-ready software.
+                </p>
+                <p>
+                  As the founder and lead developer of <span className="text-primary font-semibold">Catalyst Crew</span>, I coordinate teams to create software solutions that solve real-world problems. I thrive under pressure, participate actively in the hackathon circuit, and enjoy building systems that are elegant both inside and out.
+                </p>
+              </motion.div>
+
+              {/* Breathing styles cards grid */}
+              <motion.div 
+                variants={fadeInUp} 
+                className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4"
+              >
+                <div className="glass-card p-4 hover:border-water/30 hover:shadow-[0_0_15px_rgba(59,130,246,0.15)] transition-all duration-300">
+                  <div className="flex items-center gap-3">
+                    <span className="w-2.5 h-2.5 rounded-full bg-water animate-pulse" />
+                    <h4 className="text-sm font-mono text-light tracking-wide uppercase">Water Style (Frontend)</h4>
+                  </div>
+                  <p className="text-xs text-muted/80 mt-2 leading-relaxed">
+                    Fluid, highly-responsive user experiences using React, Next.js, and TypeScript.
+                  </p>
+                </div>
+
+                <div className="glass-card p-4 hover:border-flame/30 hover:shadow-[0_0_15px_rgba(249,115,22,0.15)] transition-all duration-300">
+                  <div className="flex items-center gap-3">
+                    <span className="w-2.5 h-2.5 rounded-full bg-flame animate-pulse" />
+                    <h4 className="text-sm font-mono text-light tracking-wide uppercase">Flame Style (Backend)</h4>
+                  </div>
+                  <p className="text-xs text-muted/80 mt-2 leading-relaxed">
+                    Powerful, reliable API logic and storage powered by Node.js, FastAPI, and PostgreSQL.
+                  </p>
+                </div>
+
+                <div className="glass-card p-4 hover:border-mist/30 hover:shadow-[0_0_15px_rgba(139,92,246,0.15)] transition-all duration-300">
+                  <div className="flex items-center gap-3">
+                    <span className="w-2.5 h-2.5 rounded-full bg-mist animate-pulse" />
+                    <h4 className="text-sm font-mono text-light tracking-wide uppercase">Mist Style (AI / ML)</h4>
+                  </div>
+                  <p className="text-xs text-muted/80 mt-2 leading-relaxed">
+                    Intelligent integrations, prompt engineering, and custom models powered by Python.
+                  </p>
+                </div>
+
+                <div className="glass-card p-4 hover:border-thunder/30 hover:shadow-[0_0_15px_rgba(234,179,8,0.15)] transition-all duration-300">
+                  <div className="flex items-center gap-3">
+                    <span className="w-2.5 h-2.5 rounded-full bg-thunder animate-pulse" />
+                    <h4 className="text-sm font-mono text-light tracking-wide uppercase">Thunder Style (Speed)</h4>
+                  </div>
+                  <p className="text-xs text-muted/80 mt-2 leading-relaxed">
+                    Rapid deployment, clean code structure, and lightning-fast developer iteration cycles.
+                  </p>
+                </div>
+              </motion.div>
+            </motion.div>
+          </div>
+
+          {/* Right Column: Profile Image */}
+          <div className="lg:col-span-5 flex justify-center">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, x: 50 }}
+              animate={isInView ? { opacity: 1, scale: 1, x: 0 } : { opacity: 0, scale: 0.9, x: 50 }}
+              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+              className="relative w-full max-w-[360px] aspect-square group"
+            >
+              {/* Outer Decorative Neon Glow Backing */}
+              <div className="absolute -inset-4 rounded-2xl bg-gradient-to-tr from-primary via-accent to-water opacity-20 blur-xl group-hover:opacity-40 transition-opacity duration-500 pointer-events-none" />
+
+              {/* Character Photo Frame Card */}
+              <div className="relative w-full h-full rounded-2xl overflow-hidden border border-white/10 group-hover:border-primary/40 transition-colors duration-500 bg-dark/80 backdrop-blur-sm shadow-2xl">
+                <img
+                  src="/arpit_profile.png"
+                  alt="Arpit Bajpai"
+                  className="w-full h-full object-cover grayscale-[15%] group-hover:grayscale-0 scale-100 group-hover:scale-105 transition-all duration-700 ease-out"
+                />
+
+                {/* Overlay Vignette and Gradient */}
+                <div className="absolute inset-0 bg-gradient-to-t from-dark via-transparent to-transparent opacity-70 group-hover:opacity-40 transition-opacity duration-500 pointer-events-none" />
+
+                {/* Subtitle / Rank Ribbon */}
+                <div className="absolute bottom-4 left-4 right-4 translate-y-2 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none">
+                  <div className="glass-card p-3 text-center border-white/5 bg-dark/60 backdrop-blur-md">
+                    <p className="text-[10px] font-mono text-accent tracking-[0.2em] uppercase">Rank: Tech Hashira</p>
+                    <h4 className="text-sm font-bold text-light font-heading mt-0.5">Arpit Bajpai</h4>
+                  </div>
+                </div>
+              </div>
+
+              {/* Traditional Thematic Corner Accents */}
+              <div className="absolute -top-2 -left-2 w-6 h-6 border-t-2 border-l-2 border-primary/60 group-hover:scale-110 group-hover:border-primary transition-all duration-300" />
+              <div className="absolute -top-2 -right-2 w-6 h-6 border-t-2 border-r-2 border-primary/60 group-hover:scale-110 group-hover:border-primary transition-all duration-300" />
+              <div className="absolute -bottom-2 -left-2 w-6 h-6 border-b-2 border-l-2 border-primary/60 group-hover:scale-110 group-hover:border-primary transition-all duration-300" />
+              <div className="absolute -bottom-2 -right-2 w-6 h-6 border-b-2 border-r-2 border-primary/60 group-hover:scale-110 group-hover:border-primary transition-all duration-300" />
+            </motion.div>
+          </div>
+
         </div>
       </div>
     </section>
-  );
-}
-
-function TimelineCard({
-  node,
-  index,
-  isRight,
-}: {
-  node: (typeof TIMELINE_NODES)[0];
-  index: number;
-  isRight: boolean;
-}) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-50px' });
-
-  return (
-    <div
-      ref={ref}
-      className={`relative flex items-start mb-12 md:mb-16 ${
-        isRight ? 'md:flex-row-reverse' : 'md:flex-row'
-      }`}
-    >
-      {/* Dot on the line */}
-      <motion.div
-        initial={{ scale: 0 }}
-        animate={isInView ? { scale: 1 } : { scale: 0 }}
-        transition={{ duration: 0.4, delay: 0.2 }}
-        className="absolute left-4 md:left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-primary border-2 border-dark z-10"
-      >
-        <div className="absolute inset-0 rounded-full bg-primary animate-ping opacity-20" />
-      </motion.div>
-
-      {/* Card */}
-      <motion.div
-        initial={{
-          opacity: 0,
-          x: isRight ? 60 : -60,
-        }}
-        animate={isInView ? { opacity: 1, x: 0 } : {}}
-        transition={{
-          duration: 0.7,
-          delay: 0.1,
-          ease: [0.22, 1, 0.36, 1],
-        }}
-        className={`ml-12 md:ml-0 md:w-[calc(50%-2rem)] ${
-          isRight ? 'md:mr-auto md:pl-0 md:pr-8' : 'md:ml-auto md:pl-8 md:pr-0'
-        }`}
-      >
-        <div className="glass-card p-6 group hover:glow-primary">
-          <span className="text-xs font-mono text-accent/60 tracking-wider">
-            {node.year}
-          </span>
-          <h3 className="mt-2 text-xl font-bold font-heading text-light group-hover:text-primary transition-colors">
-            {node.title}
-          </h3>
-          <p className="mt-2 text-sm text-muted leading-relaxed">
-            {node.description}
-          </p>
-
-          {/* Slash accent */}
-          <div className="mt-4 w-8 h-[2px] bg-primary/50 group-hover:w-16 transition-all duration-500" />
-        </div>
-      </motion.div>
-    </div>
   );
 }

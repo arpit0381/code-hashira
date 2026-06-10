@@ -3,6 +3,7 @@
 import { useEffect, useRef } from 'react';
 import dynamic from 'next/dynamic';
 import gsap from 'gsap';
+import { useInView } from 'framer-motion';
 import HeroCTA from '@/components/hero/HeroCTA';
 
 const HeroScene = dynamic(() => import('@/features/three/HeroScene'), {
@@ -14,17 +15,18 @@ const HeroScene = dynamic(() => import('@/features/three/HeroScene'), {
 
 export default function HeroSection() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(containerRef, { margin: '0px 0px -200px 0px' });
 
   useEffect(() => {
     // GSAP entry animation timeline
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ delay: 0.3 });
 
-      // 0. Background Image zoom reveal
+      // 0. Background Image zoom reveal (GPU accelerated, no heavy filter blur)
       tl.fromTo(
         '.gsap-hero-bg',
-        { scale: 1.15, filter: 'blur(5px)' },
-        { scale: 1, filter: 'blur(0px)', duration: 1.8, ease: 'power2.out' },
+        { scale: 1.1, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 1.6, ease: 'power2.out' },
         0
       );
 
@@ -106,12 +108,13 @@ export default function HeroSection() {
         className="gsap-hero-bg absolute inset-0 z-0 bg-cover bg-center"
         style={{
           backgroundImage: 'linear-gradient(rgba(5, 5, 5, 0.45), rgba(5, 5, 5, 0.85)), url("/demon_slayer_bg.png")',
+          willChange: 'transform, opacity',
         }}
       />
 
       {/* Three.js Background Scene */}
       <div className="absolute inset-0 z-[1] pointer-events-none">
-        <HeroScene />
+        {isInView && <HeroScene />}
       </div>
 
       {/* Dark gradient overlay */}

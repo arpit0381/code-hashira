@@ -11,11 +11,23 @@ export default function ExperienceSection() {
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <section id="experience" className="section-wrapper relative">
-      {/* Background glow */}
-      <div className="absolute top-1/2 left-0 w-[400px] h-[400px] rounded-full bg-flame/5 blur-[120px] pointer-events-none" />
+    <section id="experience" className="section-wrapper relative overflow-hidden py-24 md:py-32">
+      {/* Background Image with Dark Linear Gradient Overlay */}
+      <div 
+        className="absolute inset-0 z-0 bg-cover bg-center transition-all duration-700"
+        style={{
+          backgroundImage: 'linear-gradient(rgba(5, 5, 5, 0.75), rgba(5, 5, 5, 0.95)), url("/experience_bg.png")',
+          willChange: 'transform, opacity',
+        }}
+      />
 
-      <div className="max-w-5xl mx-auto" ref={ref}>
+      {/* Dark overlay for extra text contrast */}
+      <div className="absolute inset-0 z-[1] bg-gradient-to-b from-dark/10 via-dark/40 to-dark pointer-events-none" />
+
+      {/* Background glow */}
+      <div className="absolute top-1/2 left-0 w-[400px] h-[400px] rounded-full glow-circle-flame pointer-events-none z-[1]" />
+
+      <div className="max-w-5xl mx-auto relative z-10" ref={ref}>
         {/* Section Header */}
         <motion.div
           initial="hidden"

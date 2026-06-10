@@ -11,10 +11,23 @@ export default function CertificationsSection() {
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <section id="certifications" className="section-wrapper relative">
-      <div className="absolute top-1/3 right-0 w-[400px] h-[400px] rounded-full bg-thunder/5 blur-[120px] pointer-events-none" />
+    <section id="certifications" className="section-wrapper relative overflow-hidden py-24 md:py-32">
+      {/* Background Image with Dark Linear Gradient Overlay */}
+      <div 
+        className="absolute inset-0 z-0 bg-cover bg-center transition-all duration-700"
+        style={{
+          backgroundImage: 'linear-gradient(rgba(5, 5, 5, 0.75), rgba(5, 5, 5, 0.95)), url("/certifications_bg.png")',
+          willChange: 'transform, opacity',
+        }}
+      />
 
-      <div className="max-w-6xl mx-auto" ref={ref}>
+      {/* Dark overlay for extra text contrast */}
+      <div className="absolute inset-0 z-[1] bg-gradient-to-b from-dark/10 via-dark/40 to-dark pointer-events-none" />
+
+      {/* Background glow */}
+      <div className="absolute top-1/3 right-0 w-[400px] h-[400px] rounded-full glow-circle-thunder pointer-events-none z-[1]" />
+
+      <div className="max-w-6xl mx-auto relative z-10" ref={ref}>
         {/* Section Header */}
         <motion.div
           initial="hidden"

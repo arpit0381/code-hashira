@@ -117,9 +117,9 @@ export default function AILabSection() {
   );
 
   return (
-    <section id="ai-lab" className="section-wrapper relative">
+    <section id="ai-lab" className="section-wrapper relative overflow-hidden">
       {/* Background glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-mist/5 blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full glow-circle-mist pointer-events-none" />
 
       <div className="max-w-4xl mx-auto" ref={ref}>
         {/* Section Header */}
