@@ -226,7 +226,7 @@ export const STATIC_PROJECTS: Project[] = [
     githubUrl: 'https://github.com/arpit-bajpai',
     liveUrl: 'https://formstuff.in',
     featured: true,
-    imageUrl: '/projects/ecommerce.jpg',
+    imageUrl: '/formstuffp.png',
   },
   {
     id: 'lifereceipt',
@@ -367,35 +367,27 @@ export const CERTIFICATIONS: Certification[] = [
 export const TESTIMONIALS: Testimonial[] = [
   {
     id: 'test-1',
-    name: 'Rahul Sharma',
-    role: 'CTO',
-    company: 'TechStart India',
+    name: 'Deepanshu Bajpai',
+    role: 'CEO',
+    company: 'Sulax Solar',
     quote:
-      'Arpit delivered our entire platform in half the expected time. His code quality and attention to detail are exceptional. One of the most talented young developers I\'ve worked with.',
+      'Arpit delivered an exceptional, professional website for our solar energy business. His intuitive design and seamless user experience have significantly enhanced our brand presence and customer engagement.',
   },
   {
     id: 'test-2',
-    name: 'Priya Patel',
-    role: 'Product Manager',
-    company: 'InnovateLabs',
+    name: 'Krishna Bajpai',
+    role: 'Founder and CEO',
+    company: 'Posterwa',
     quote:
-      'Working with Arpit was a game-changer for our product. He didn\'t just write code — he understood our vision and translated it into a product that users love.',
+      'As our Sales Captain, Arpit exceeded expectations by achieving a 200% sales target in just two months. His strategic marketing campaigns and strong leadership skills are truly outstanding.',
   },
   {
     id: 'test-3',
-    name: 'Amit Kumar',
+    name: 'Pawan Dubey',
     role: 'Founder',
-    company: 'DataFlow AI',
+    company: 'Triveni Road Lines',
     quote:
-      'Arpit\'s AI and ML expertise is way beyond his years. He built our recommendation engine from scratch and it increased user engagement by 3x. Highly recommended.',
-  },
-  {
-    id: 'test-4',
-    name: 'Sarah Chen',
-    role: 'Engineering Lead',
-    company: 'GlobalTech',
-    quote:
-      'A rare combination of technical brilliance and design sensibility. Arpit builds applications that are both powerful under the hood and beautiful on the surface.',
+      'Working with Arpit has been a fantastic experience. He brings technical brilliance, reliability, and a deep understanding of business needs to every project he takes on.',
   },
 ];
 
