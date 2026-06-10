@@ -64,28 +64,28 @@ export default function Navbar() {
         variants={navbarVariants}
         animate={hidden ? 'hidden' : 'visible'}
         className={cn(
-          'fixed left-1/2 -translate-x-1/2 z-50 w-[95%] sm:w-[90%] max-w-5xl rounded-full border transition-all duration-500',
+          'fixed left-1/2 -translate-x-1/2 z-50 w-[95%] md:w-max md:min-w-[700px] max-w-[98%] rounded-full border transition-all duration-500',
           scrolled
-            ? 'top-4 py-2 px-6 bg-dark-card/90 border-accent/20 shadow-[0_0_20px_rgba(0,255,156,0.1)] backdrop-blur-md'
-            : 'top-6 py-4 px-8 bg-white/[0.02] border-white/5 backdrop-blur-sm'
+            ? 'top-4 py-2 px-5 md:px-8 bg-dark-card/90 border-accent/20 shadow-[0_0_20px_rgba(0,255,156,0.1)] backdrop-blur-md'
+            : 'top-6 py-3 md:py-4 px-6 md:px-10 bg-dark-card/40 border-white/10 backdrop-blur-md'
         )}
       >
-        <div className="flex items-center justify-between w-full">
+        <div className="flex items-center justify-between w-full gap-4 lg:gap-8">
           {/* Logo with Kanji Badge */}
-          <a href="#home" className="relative group flex items-center gap-2">
+          <a href="#home" className="relative group flex items-center gap-2 shrink-0">
             <span className="text-xl font-bold font-heading tracking-wider flex items-center">
               <span className="text-primary font-black">A</span>
               <span className="text-light">RPIT</span>
             </span>
             {/* Calligraphic Hashira badge */}
-            <span className="text-[10px] bg-primary/10 border border-primary/20 text-primary px-1.5 py-0.5 rounded font-mono font-bold select-none">
+            <span className="hidden sm:inline-block text-[10px] bg-primary/10 border border-primary/20 text-primary px-1.5 py-0.5 rounded font-mono font-bold select-none">
               柱 (Hashira)
             </span>
             <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-accent group-hover:w-full transition-all duration-300" />
           </a>
 
           {/* Nav Links */}
-          <div className="hidden md:flex items-center gap-1">
+          <div className="hidden lg:flex items-center gap-1 justify-center shrink-0">
             {NAV_LINKS.map((link) => {
               const isActive = activeSection === link.sectionId;
               return (
@@ -93,7 +93,7 @@ export default function Navbar() {
                   key={link.sectionId}
                   href={link.href}
                   className={cn(
-                    'relative px-4 py-2 text-sm font-medium tracking-wide transition-all duration-300 rounded-full group overflow-hidden',
+                    'relative px-2 xl:px-3 py-2 text-[13px] xl:text-sm font-medium tracking-wide transition-all duration-300 rounded-full group overflow-hidden whitespace-nowrap',
                     isActive ? 'text-accent' : 'text-muted hover:text-light'
                   )}
                 >
@@ -118,10 +118,10 @@ export default function Navbar() {
           </div>
 
           {/* CTA Action */}
-          <div className="hidden md:flex items-center gap-4">
+          <div className="hidden md:flex items-center gap-4 shrink-0">
             <a
               href="#contact"
-              className="relative group overflow-hidden px-5 py-2 text-sm font-semibold text-dark bg-accent rounded-full hover:bg-accent-dim shadow-[0_0_15px_rgba(0,255,156,0.15)] hover:shadow-[0_0_25px_rgba(0,255,156,0.3)] transition-all duration-300"
+              className="relative group overflow-hidden px-4 xl:px-5 py-2 text-[13px] xl:text-sm font-semibold text-dark bg-accent rounded-full hover:bg-accent-dim shadow-[0_0_15px_rgba(0,255,156,0.15)] hover:shadow-[0_0_25px_rgba(0,255,156,0.3)] transition-all duration-300 whitespace-nowrap"
             >
               <span className="relative z-10">Hire Me</span>
             </a>
@@ -131,7 +131,7 @@ export default function Navbar() {
           <button
             onClick={() => setIsOpen(!isOpen)}
             suppressHydrationWarning
-            className="md:hidden relative z-50 p-2 text-light hover:text-accent transition-colors"
+            className="lg:hidden relative z-50 p-2 text-light hover:text-accent transition-colors ml-auto"
             aria-label="Toggle menu"
           >
             {isOpen ? <X size={22} /> : <Menu size={22} />}
