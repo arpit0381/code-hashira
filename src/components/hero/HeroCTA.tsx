@@ -36,14 +36,13 @@ export default function HeroCTA() {
       {/* Download Resume */}
       <motion.button
         whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.97 }}
-        suppressHydrationWarning
+        whileTap={{ scale: 0.95 }}
         onClick={() => {
-          window.open('/resume.pdf', '_blank');
+          window.open('/24116002142_Arpit Bajpai.pdf', '_blank');
         }}
-        className="group relative flex items-center gap-2 px-8 py-3.5 border border-white/10 hover:border-white/30 text-muted hover:text-light font-semibold rounded-lg transition-all duration-200"
+        className="px-6 py-3 border border-white/10 hover:border-accent hover:bg-white/5 rounded-xl font-medium transition-colors flex items-center justify-center gap-2"
       >
-        <Download size={16} />
+        <Download size={18} />
         Resume
         <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-0 h-[2px] bg-white/50 group-hover:w-4/5 transition-all duration-300 ease-out" />
       </motion.button>
