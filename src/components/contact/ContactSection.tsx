@@ -14,7 +14,7 @@ interface FormData {
 
 export default function ContactSection() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const isInView = useInView(ref, { once: true, margin: '0px' });
   const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
@@ -90,11 +90,23 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="contact" className="section-wrapper relative overflow-hidden">
-      {/* Background glow */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] rounded-full glow-circle-primary pointer-events-none" />
+    <section id="contact" className="section-wrapper relative overflow-hidden py-24 md:py-32">
+      {/* Background Image with Dark Linear Gradient Overlay */}
+      <div 
+        className="absolute inset-0 z-0 bg-cover bg-center transition-all duration-700 pointer-events-none"
+        style={{
+          backgroundImage: 'linear-gradient(rgba(5, 5, 5, 0.75), rgba(5, 5, 5, 0.95)), url("/contact_bg.png")',
+          willChange: 'transform, opacity',
+        }}
+      />
 
-      <div className="max-w-3xl mx-auto" ref={ref}>
+      {/* Dark overlay for extra text contrast */}
+      <div className="absolute inset-0 z-[1] bg-gradient-to-b from-dark/10 via-dark/40 to-dark pointer-events-none" />
+
+      {/* Background glow */}
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] rounded-full glow-circle-primary pointer-events-none z-[1]" />
+
+      <div className="max-w-3xl mx-auto relative z-10" ref={ref}>
         {/* Section Header */}
         <motion.div
           initial="hidden"

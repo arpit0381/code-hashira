@@ -117,11 +117,23 @@ export default function AILabSection() {
   );
 
   return (
-    <section id="ai-lab" className="section-wrapper relative overflow-hidden">
-      {/* Background glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full glow-circle-mist pointer-events-none" />
+    <section id="ai-lab" className="section-wrapper relative overflow-hidden py-24 md:py-32">
+      {/* Background Image with Dark Linear Gradient Overlay */}
+      <div 
+        className="absolute inset-0 z-0 bg-cover bg-center transition-all duration-700"
+        style={{
+          backgroundImage: 'linear-gradient(rgba(5, 5, 5, 0.75), rgba(5, 5, 5, 0.95)), url("/ai_lab_bg.png")',
+          willChange: 'transform, opacity',
+        }}
+      />
 
-      <div className="max-w-4xl mx-auto" ref={ref}>
+      {/* Dark overlay for extra text contrast */}
+      <div className="absolute inset-0 z-[1] bg-gradient-to-b from-dark/10 via-dark/40 to-dark pointer-events-none" />
+
+      {/* Background glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full glow-circle-mist pointer-events-none z-[1]" />
+
+      <div className="max-w-4xl mx-auto relative z-10" ref={ref}>
         {/* Section Header */}
         <motion.div
           initial="hidden"
