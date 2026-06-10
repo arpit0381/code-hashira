@@ -236,7 +236,7 @@ export const STATIC_PROJECTS: Project[] = [
     category: 'webapp',
     techStack: ['Flutter', 'Dart', 'Firebase'],
     githubUrl: 'https://github.com/arpit-bajpai',
-    liveUrl: 'https://lifereceipt.in',
+    liveUrl: 'https://lifereceipt.arpitbajpai.in',
     featured: true,
     imageUrl: '/lifereceipt.png',
   },
@@ -272,7 +272,7 @@ export const STATIC_PROJECTS: Project[] = [
     category: 'fullstack',
     techStack: ['Next.js', 'PostgreSQL', 'GO'],
     githubUrl: 'https://github.com/arpit-bajpai',
-    liveUrl: 'https://ignitia2k26.psit.ac.in', // Guessing common domain format, will ask user to confirm if incorrect
+    liveUrl: 'https://ignitia.in', // Guessing common domain format, will ask user to confirm if incorrect
     featured: false,
     imageUrl: '/ignitia.png',
   },
@@ -412,7 +412,7 @@ export const SOCIAL_LINKS = {
   github: 'https://github.com/arpit0381',
   linkedin: 'https://linkedin.com/in/arpitbajpai',
   twitter: 'https://twitter.com/arpitbajpai',
-  email: 'arpitbajpaio38@gmail.com',
+  email: 'arpitbajpai038@gmail.com',
 } as const;
 
 // ── Project Categories ────────────────────────────────────────
