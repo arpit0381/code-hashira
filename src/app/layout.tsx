@@ -21,7 +21,7 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://arpit-bajpai.dev'),
+  metadataBase: new URL('https://arpitbajpai.in'),
   title: 'Arpit Bajpai — Full Stack Developer & AI Engineer',
   description:
     'Portfolio of Arpit Bajpai — BCA 3rd Year Student, Full Stack Developer, AI & ML Engineer, and Founder. Cutting through complexity with code and intelligence.',
@@ -80,7 +80,7 @@ const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Person',
   name: 'Arpit Bajpai',
-  url: 'https://arpit-bajpai.dev',
+  url: 'https://arpitbajpai.in',
   jobTitle: ['Full Stack Developer', 'AI & ML Engineer', 'Founder'],
   description:
     'BCA 3rd Year Student, Full Stack Developer, AI & ML Engineer, and Founder. Building the future with code.',

@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/admin/', '/api/'],
     },
-    sitemap: 'https://arpit-bajpai.dev/sitemap.xml',
+    sitemap: 'https://arpitbajpai.in/sitemap.xml',
   };
 }
